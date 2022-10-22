@@ -1,9 +1,9 @@
 body {
     text-align: center;
-    background: #222;
+    background: rgb(24, 24, 24);
     margin-top: 50px;
 }
 
 canvas {
-    background: rgb(24, 24, 24);
+    background: rgb(0, 0, 0);
 }

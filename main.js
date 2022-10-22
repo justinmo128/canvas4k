@@ -11,29 +11,34 @@ const judgments = {
     great: 90,
     good: 135,
     bad: 180
-}
+};
 
 // Global Variables
 let leftIsHeld;
 let downIsHeld;
 let upIsHeld;
 let rightIsHeld;
-let startTime = performance.now();
 let currentTime;
+let gameState = "start";
 
 // Draw Function
 window.addEventListener("load", draw);
 
 function draw() {
-    currentTime = performance.now();
-    console.log(currentTime)
-    gameLoop();
+    if (gameState === "start") {
+        startScreen();
+    } else if (gameState === "gameLoop") {
+        gameLoop();
+    }
     // Request Animation Frame
     requestAnimationFrame(draw);
 }
 
 // Key down handler
 window.addEventListener("keydown", (e) => {
+    if (gameState === "start") {
+        gameState = "gameLoop";
+    }
     let keyPressed = e.key;
     if (keyPressed === 'd' || keyPressed === 'ArrowLeft') {
         leftIsHeld = true;

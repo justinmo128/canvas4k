@@ -1,13 +1,19 @@
-function gameLoop() {
-    drawGame();
+function startScreen() {
+    let startScreen = document.createElement("img");
+    startScreen.src = "img/startscreen.png";
+    ctx.drawImage(startScreen, 0, 0)
 }
 
-// Draw Game Elements
-function drawGame() {
-    ctx.fillStyle = "rgb(24,24,24)";
+function gameLoop() {
+    // Logic
+    startSong();
+    updateSong();
+    currentTime = performance.now();
+    // Draw Elements
+    // Background
+    ctx.fillStyle = "rgb(0,0,0)";
     ctx.fillRect(0, 0, cnv.width, cnv.height);
     drawReceptors();
-    drawNotes();
 }
 
 function drawReceptors() {
@@ -46,13 +52,5 @@ function drawReceptors() {
         ctx.strokeStyle = "red";
         ctx.lineWidth = 2;
         ctx.strokeRect(384, 400, 50, 50);
-    }
-}
-
-// Move notes
-function drawNotes() {
-    if (currentTime > 1000) {
-        ctx.fillStyle = "purple";
-        ctx.fillRect(204, 400, 50, 50);
     }
 }

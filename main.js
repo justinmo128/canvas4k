@@ -19,6 +19,7 @@ let downIsHeld;
 let upIsHeld;
 let rightIsHeld;
 let currentTime;
+let lastFrameOccurence = performance.now();
 let gameState = "start";
 
 // Draw Function
@@ -37,7 +38,7 @@ function draw() {
 // Key down handler
 window.addEventListener("keydown", (e) => {
     if (gameState === "start") {
-        gameState = "gameLoop";
+        startGame();
     }
     let keyPressed = e.key;
     if (keyPressed === 'd' || keyPressed === 'ArrowLeft') {

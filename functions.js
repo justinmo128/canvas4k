@@ -1,19 +1,42 @@
 function startScreen() {
-    let startScreen = document.createElement("img");
-    startScreen.src = "img/startscreen.png";
-    ctx.drawImage(startScreen, 0, 0)
+    drawMainComponents();
+    ctx.fillStyle = "#007F96";
+    ctx.fillRect(0, 0, cnv.width, 75);
+    ctx.fillRect(0, 405, cnv.width, 75);
+    ctx.font = "50px Nabla";
+    ctx.fillStyle = "white";
+    ctx.fillText("Canvas4K", 10, 60);
+    ctx.font = "22px Roboto";
+    ctx.fillText("Controls: DFJK, Arrow Keys", 10, 465);
+    ctx.font = "30px Roboto";
+    ctx.fillText("Press any key to begin", 330, 390)
+}
+
+function startGame() {
+    startSong();
+    gameState = "gameLoop";
 }
 
 function gameLoop() {
     // Logic
-    startSong();
     updateSong();
     currentTime = performance.now();
-    // Draw Elements
+    // Draw
+    drawMainComponents();
+    drawReceptors();
+}
+
+function drawMainComponents() {
     // Background
     ctx.fillStyle = "rgb(0,0,0)";
     ctx.fillRect(0, 0, cnv.width, cnv.height);
-    drawReceptors();
+    // FPS
+    let fps = 1000 / (currentTime - lastFrameOccurence);
+    fps = Math.round(fps);
+    lastFrameOccurence = currentTime;
+    ctx.font = "14px Roboto";
+    ctx.fillStyle = "white";
+    ctx.fillText(`FPS: ${fps}`, 10, 20)
 }
 
 function drawReceptors() {

@@ -18,18 +18,25 @@ let leftIsHeld;
 let downIsHeld;
 let upIsHeld;
 let rightIsHeld;
+let leftKey = "d";
+let downKey = "j";
+let upKey = "f";
+let rightKey = "k";
 let currentTime;
 let lastFrameOccurence = performance.now();
 let gameState = "start";
+let mainMenuSelect = "start";
 
 // Draw Function
 window.addEventListener("load", draw);
 
 function draw() {
     if (gameState === "start") {
-        startScreen();
+        mainMenu();
     } else if (gameState === "gameLoop") {
         gameLoop();
+    } else if (gameState === "controls") {
+        controlsScreen();
     }
     // Request Animation Frame
     requestAnimationFrame(draw);
@@ -37,31 +44,35 @@ function draw() {
 
 // Key down handler
 window.addEventListener("keydown", (e) => {
-    if (gameState === "start") {
-        startGame();
-    }
     let keyPressed = e.key;
-    if (keyPressed === 'd' || keyPressed === 'ArrowLeft') {
-        leftIsHeld = true;
-    } else if (keyPressed === 'f' || keyPressed === 'ArrowDown') {
-        downIsHeld = true;
-    } else if (keyPressed === 'j' || keyPressed === 'ArrowUp') {
-        upIsHeld = true;
-    } else if (keyPressed === 'k' || keyPressed === 'ArrowRight') {
-        rightIsHeld = true;
+    if (gameState === "start") {
+        mainMenuHandler(keyPressed);
+    } else if (gameState === "gameLoop") {
+        if (keyPressed === leftKey) {
+            leftIsHeld = true;
+        } else if (keyPressed === downKey) {
+            downIsHeld = true;
+        } else if (keyPressed === upKey) {
+            upIsHeld = true;
+        } else if (keyPressed === rightKey) {
+            rightIsHeld = true;
+        }
+    } else if (gameState === "controls") {
+        leftKey = keyPressed;
+        gameState = "start";
     }
 })
 
 // Key up handler
 window.addEventListener("keyup", (e) => {
     let keyPressed = e.key;
-    if (keyPressed === 'd' || keyPressed === 'ArrowLeft') {
+    if (keyPressed === leftKey) {
         leftIsHeld = false;
-    } else if (keyPressed === 'f' || keyPressed === 'ArrowDown') {
+    } else if (keyPressed === downKey) {
         downIsHeld = false;
-    } else if (keyPressed === 'j' || keyPressed === 'ArrowUp') {
+    } else if (keyPressed === upKey) {
         upIsHeld = false;
-    } else if (keyPressed === 'k' || keyPressed === 'ArrowRight') {
+    } else if (keyPressed === rightKey) {
         rightIsHeld = false;
     }
 })

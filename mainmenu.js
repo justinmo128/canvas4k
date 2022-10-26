@@ -16,10 +16,10 @@ function mainMenu() {
 function drawStart() {
     ctx.fillStyle = "#007F96";
     ctx.fillRect(cnv.width - cnv.width / 2, 0, cnv.width / 2, cnv.height);
-    ctx.font = "50px Nabla";
+    ctx.fillStyle = "white";
+    ctx.font = "50px Roboto";
     ctx.fillText("Canvas4K", 330, 60);
     ctx.font = "22px Roboto";
-    ctx.fillStyle = "white";
     ctx.fillText(`Your controls:`, 330, 90);
     ctx.fillText(`${leftKey}, ${downKey}, ${upKey}, ${rightKey}`, 330, 120);
 }

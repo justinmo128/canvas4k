@@ -1,7 +1,6 @@
 function gameLoop() {
     // Logic
     updateSong();
-    currentTime = performance.now();
     // Draw
     drawMainComponents();
     drawReceptors();

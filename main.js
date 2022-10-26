@@ -19,8 +19,8 @@ let downIsHeld;
 let upIsHeld;
 let rightIsHeld;
 let leftKey = "d";
-let downKey = "j";
-let upKey = "f";
+let downKey = "f";
+let upKey = "j";
 let rightKey = "k";
 let currentTime;
 let lastFrameOccurence = performance.now();
@@ -40,6 +40,7 @@ function draw() {
     }
     // Request Animation Frame
     requestAnimationFrame(draw);
+    currentTime = performance.now();
 }
 
 // Key down handler

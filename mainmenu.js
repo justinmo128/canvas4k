@@ -118,13 +118,13 @@ function controlsHandler(keyPressed) {
 function drawControlSelect() {
     if (controlSel) {
         if (mainMenuSelect === 0) {
-            ctx.drawImage(buttonhover, 10, 65);
+            ctx.drawImage(buttonhover, 10, 45);
         } else if (mainMenuSelect === 1) {
-            ctx.drawImage(buttonhover, 10, 125);
+            ctx.drawImage(buttonhover, 10, 105);
         } else if (mainMenuSelect === 2) {
-            ctx.drawImage(buttonhover, 10, 185);
+            ctx.drawImage(buttonhover, 10, 165);
         } else if (mainMenuSelect === 3) {
-            ctx.drawImage(buttonhover, 10, 245);
+            ctx.drawImage(buttonhover, 10, 225);
         }
     }
 }

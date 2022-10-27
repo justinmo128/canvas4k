@@ -120,11 +120,11 @@ function drawControlSelect() {
         if (mainMenuSelect === 0) {
             ctx.drawImage(buttonhover, 10, 65);
         } else if (mainMenuSelect === 1) {
-            ctx.drawImage(buttonhover, 10, 369);
+            ctx.drawImage(buttonhover, 10, 125);
         } else if (mainMenuSelect === 2) {
-            ctx.drawImage(buttonhover, 10, 369);
+            ctx.drawImage(buttonhover, 10, 185);
         } else if (mainMenuSelect === 3) {
-            ctx.drawImage(buttonhover, 10, 369);
+            ctx.drawImage(buttonhover, 10, 245);
         }
     }
 }

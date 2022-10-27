@@ -18,14 +18,14 @@ let leftIsHeld;
 let downIsHeld;
 let upIsHeld;
 let rightIsHeld;
-let leftKey = "d";
-let downKey = "f";
-let upKey = "j";
-let rightKey = "k";
+let controls = ["d", "f", "j", "k"];
 let currentTime;
 let lastFrameOccurence = performance.now();
 let gameState = "start";
-let mainMenuSelect = "start";
+let mainMenuSelect = 0;
+let controlSel = false;
+let buttonhover = new Image(260, 40);
+buttonhover.src = 'img/buttonhover.png';
 
 // Draw Function
 window.addEventListener("load", draw);
@@ -46,34 +46,32 @@ function draw() {
 // Key down handler
 window.addEventListener("keydown", (e) => {
     let keyPressed = e.key;
-    if (gameState === "start") {
+    controlsHandler(keyPressed);
+    if (gameState === "start" || gameState === "controls") {
         mainMenuHandler(keyPressed);
     } else if (gameState === "gameLoop") {
-        if (keyPressed === leftKey) {
+        if (keyPressed === controls[0]) {
             leftIsHeld = true;
-        } else if (keyPressed === downKey) {
+        } else if (keyPressed === controls[1]) {
             downIsHeld = true;
-        } else if (keyPressed === upKey) {
+        } else if (keyPressed === controls[2]) {
             upIsHeld = true;
-        } else if (keyPressed === rightKey) {
+        } else if (keyPressed === controls[3]) {
             rightIsHeld = true;
         }
-    } else if (gameState === "controls") {
-        leftKey = keyPressed;
-        gameState = "start";
     }
 })
 
 // Key up handler
 window.addEventListener("keyup", (e) => {
     let keyPressed = e.key;
-    if (keyPressed === leftKey) {
+    if (keyPressed === controls[0]) {
         leftIsHeld = false;
-    } else if (keyPressed === downKey) {
+    } else if (keyPressed === controls[1]) {
         downIsHeld = false;
-    } else if (keyPressed === upKey) {
+    } else if (keyPressed === controls[2]) {
         upIsHeld = false;
-    } else if (keyPressed === rightKey) {
+    } else if (keyPressed === controls[3]) {
         rightIsHeld = false;
     }
 })

@@ -1,11 +1,9 @@
 function mainMenu() {
     drawMainComponents();
     drawStart();
-    let buttonhover = new Image(260, 40);
-    buttonhover.src = 'img/buttonhover.png';
-    if (mainMenuSelect === "start") {
+    if (mainMenuSelect === 0) {
         ctx.drawImage(buttonhover, 10, 169)
-    } else if (mainMenuSelect === "controls") {
+    } else if (mainMenuSelect === 1) {
         ctx.drawImage(buttonhover, 10, 219)
     }
     ctx.font = "30px Roboto";
@@ -21,40 +19,128 @@ function drawStart() {
     ctx.fillText("Canvas4K", 330, 60);
     ctx.font = "22px Roboto";
     ctx.fillText(`Your controls:`, 330, 90);
-    ctx.fillText(`${leftKey}, ${downKey}, ${upKey}, ${rightKey}`, 330, 120);
-}
-
-function mainMenuHandler(keyPressed) {
-    if (keyPressed === "ArrowDown" || keyPressed === "ArrowUp") {
-        if (mainMenuSelect === "start") {
-            mainMenuSelect = "controls";
-        } else {
-            mainMenuSelect = "start";
-        }
-    }
-    if (keyPressed === "Enter") {
-        if (mainMenuSelect === "start") {
-            startGame();
-        } else {
-            gameState = "controls";
-        }
-    }
+    ctx.fillText(`${controls[0]}, ${controls[1]}, ${controls[2]}, ${controls[3]}`, 330, 120);
 }
 
 function controlsScreen() {
     drawMainComponents();
     drawStart();
-    ctx.fillStyle = "#005F70";
-    ctx.fillRect(20, 120, 600, 240);
+    drawControlSelect();
+    if (mainMenuSelect === 0) {
+        ctx.fillStyle = "purple";
+        ctx.fillRect(20, 40, 50, 50);
+    } else if (mainMenuSelect === 1) {
+        ctx.fillStyle = "cyan";
+        ctx.fillRect(20, 100, 50, 50);
+    } else if (mainMenuSelect === 2) {
+        ctx.fillStyle = "lime";
+        ctx.fillRect(20, 160, 50, 50);
+    } else if (mainMenuSelect === 3) {
+        ctx.fillStyle = "red";
+        ctx.fillRect(20, 220, 50, 50);
+    } else if (mainMenuSelect === 4) {
+        ctx.drawImage(buttonhover, 10, 369)
+    }
     ctx.font = "30px Roboto";
+    // Left
+    ctx.strokeStyle = "purple";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(20, 40, 50, 50);
     ctx.fillStyle = "white";
-    controlsHandler();
+    ctx.fillText("Left", 90, 75);
+    // Down
+    ctx.strokeStyle = "cyan";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(20, 100, 50, 50);
+    ctx.fillStyle = "white";
+    ctx.fillText("Down", 90, 135);
+    // Up
+    ctx.strokeStyle = "lime";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(20, 160, 50, 50);
+    ctx.fillStyle = "white";
+    ctx.fillText("Up", 90, 195);
+    // Right
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(20, 220, 50, 50);
+    ctx.fillStyle = "white";
+    ctx.fillText("Right", 90, 255);
+    // Back
+    ctx.fillStyle = "white";
+    ctx.fillText("Back", 35, 400);
+}
+
+function mainMenuHandler(keyPressed) {
+    if (keyPressed === "ArrowDown") {
+        mainMenuSelect++;
+        if (gameState === "start" && mainMenuSelect === 2 ||
+        gameState === "controls" && mainMenuSelect === 5) {
+            mainMenuSelect = 0;
+        }
+    } else if (keyPressed === "ArrowUp") {
+        mainMenuSelect--;
+        if (mainMenuSelect === -1) {
+            if (gameState === "start") {
+                mainMenuSelect = 1;
+            } else if (gameState === "controls") {
+                mainMenuSelect = 4;
+            }
+        }
+    }
+    if (keyPressed === "Enter") {
+        if (gameState === "start") {
+            if (mainMenuSelect === 0) {
+                startGame();
+            } else if (mainMenuSelect === 1) {
+                gameState = "controls";
+                mainMenuSelect = 4;
+            }
+        } else if (gameState === "controls") {
+            if (mainMenuSelect === 4) {
+                gameState = "start";
+                mainMenuSelect = 1;
+                controlsNotEqual(controls);
+            } else {
+                controlSel = true;
+            }
+        }
+    }
 }
 
 function controlsHandler(keyPressed) {
+    if (controlSel) {
+        controls[mainMenuSelect] = keyPressed;
+        controlSel = false;
+    }
+}
+
+function drawControlSelect() {
+    if (controlSel) {
+        if (mainMenuSelect === 0) {
+            ctx.drawImage(buttonhover, 10, 65);
+        } else if (mainMenuSelect === 1) {
+            ctx.drawImage(buttonhover, 10, 369);
+        } else if (mainMenuSelect === 2) {
+            ctx.drawImage(buttonhover, 10, 369);
+        } else if (mainMenuSelect === 3) {
+            ctx.drawImage(buttonhover, 10, 369);
+        }
+    }
+}
+
+function controlsNotEqual(array) {
+    for (let i = 0; i < array.length; i++) {
+        for (let j = i + 1; j < array.length; j++) {
+            if (array[i] === array[j]) {
+                controls = ["d", "f", "j", "k"];
+            }
+        }
+    }
 }
 
 function startGame() {
     startSong();
+    controlsNotEqual(controls);
     gameState = "gameLoop";
 }

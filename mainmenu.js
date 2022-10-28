@@ -100,7 +100,7 @@ function mainMenuHandler(keyPressed) {
             if (mainMenuSelect === 4) {
                 gameState = "start";
                 mainMenuSelect = 1;
-                controlsNotEqual(controls);
+                controlsNotEqual();
             } else {
                 controlSel = true;
             }
@@ -129,10 +129,10 @@ function drawControlSelect() {
     }
 }
 
-function controlsNotEqual(array) {
-    for (let i = 0; i < array.length; i++) {
-        for (let j = i + 1; j < array.length; j++) {
-            if (array[i] === array[j]) {
+function controlsNotEqual() {
+    for (let i = 0; i < controls.length; i++) {
+        for (let j = i + 1; j < controls.length; j++) {
+            if (controls[i] === controls[j]) {
                 controls = ["d", "f", "j", "k"];
             }
         }
@@ -141,6 +141,6 @@ function controlsNotEqual(array) {
 
 function startGame() {
     startSong();
-    controlsNotEqual(controls);
+    controlsNotEqual();
     gameState = "gameLoop";
 }

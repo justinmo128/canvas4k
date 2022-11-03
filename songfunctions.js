@@ -29,3 +29,32 @@ function updateSong() {
         tickSound.play(); //temporary
     }
 }
+
+class Note {
+    constructor(notes) {
+        this.w = 50;
+        this.h = 50;
+        this.x = 204 + 0 * 60;
+        this.beat = notes.measure * GHOST.crotchet;
+        this.speed = 0.1;
+        this.distanceFromReceptor = this.beat - GHOST.songposition;
+        this.y = 400 - this.distanceFromReceptor;
+        ctx.fillStyle = "purple";
+        ctx.fillRect(this.x, this.y, this.w, this.h);
+    }
+}
+
+function moveNotes() {
+    for (let i = 0; i < notes.length; i++) {
+        let newNote = new Note(notes[i]);
+        // console.log(notes[i])
+        console.log(newNote.distanceFromReceptor)
+    }
+}
+
+let notes = [
+    {
+        measure: 5,
+        notes: 1000,
+    }
+]

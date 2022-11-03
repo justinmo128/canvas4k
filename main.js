@@ -14,11 +14,8 @@ const judgments = {
 };
 
 // Global Variables
-let leftIsHeld;
-let downIsHeld;
-let upIsHeld;
-let rightIsHeld;
 let controls = ["d", "f", "j", "k"];
+let held = [false, false, false, false];
 let currentTime;
 let lastFrameOccurence = performance.now();
 let gameState = "start";
@@ -49,15 +46,11 @@ window.addEventListener("keydown", (e) => {
     controlsHandler(keyPressed);
     if (gameState === "start" || gameState === "controls") {
         mainMenuHandler(keyPressed);
-    } else if (gameState === "gameLoop") {
-        if (keyPressed === controls[0]) {
-            leftIsHeld = true;
-        } else if (keyPressed === controls[1]) {
-            downIsHeld = true;
-        } else if (keyPressed === controls[2]) {
-            upIsHeld = true;
-        } else if (keyPressed === controls[3]) {
-            rightIsHeld = true;
+    }
+        
+    for (let i = 0; i < 4; i++) {
+        if (keyPressed === controls[i] && gameState === "gameLoop") {
+            held[i] = true;
         }
     }
 })
@@ -65,13 +58,10 @@ window.addEventListener("keydown", (e) => {
 // Key up handler
 window.addEventListener("keyup", (e) => {
     let keyPressed = e.key;
-    if (keyPressed === controls[0]) {
-        leftIsHeld = false;
-    } else if (keyPressed === controls[1]) {
-        downIsHeld = false;
-    } else if (keyPressed === controls[2]) {
-        upIsHeld = false;
-    } else if (keyPressed === controls[3]) {
-        rightIsHeld = false;
+
+    for (let i = 0; i < 4; i++) {
+        if (keyPressed === controls[i] && gameState === "gameLoop") {
+            held[i] = false;
+        }
     }
 })

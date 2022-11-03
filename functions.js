@@ -1,6 +1,7 @@
 function gameLoop() {
     // Logic
     updateSong();
+    moveNotes();
     // Draw
     drawMainComponents();
     drawReceptors();
@@ -21,7 +22,7 @@ function drawMainComponents() {
 
 function drawReceptors() {
     // Left receptor
-    if (leftIsHeld) {
+    if (held[0]) {
         ctx.fillStyle = "purple";
         ctx.fillRect(204, 400, 50, 50);
     } else {
@@ -30,7 +31,7 @@ function drawReceptors() {
         ctx.strokeRect(204, 400, 50, 50);
     }
     // Down receptor
-    if (downIsHeld) {
+    if (held[1]) {
         ctx.fillStyle = "cyan";
         ctx.fillRect(264, 400, 50, 50);
     } else {
@@ -39,7 +40,7 @@ function drawReceptors() {
         ctx.strokeRect(264, 400, 50, 50);
     }
     // Up receptor
-    if (upIsHeld) {
+    if (held[2]) {
         ctx.fillStyle = "lime";
         ctx.fillRect(324, 400, 50, 50);
     } else {
@@ -48,7 +49,7 @@ function drawReceptors() {
         ctx.strokeRect(324, 400, 50, 50);
     }
     // Right receptor
-    if (rightIsHeld) {
+    if (held[3]) {
         ctx.fillStyle = "red";
         ctx.fillRect(384, 400, 50, 50);
     } else {

@@ -143,7 +143,7 @@ let notes = [
         notes: "0001",
     },
     {
-        measure: 19.5,
+        measure: 19,
         notes: "1000",
     },
 ]

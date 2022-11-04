@@ -86,4 +86,64 @@ let notes = [
         measure: 10.5,
         notes: "0001",
     },
+    {
+        measure: 11,
+        notes: "0100",
+    },
+    {
+        measure: 11.5,
+        notes: "0001",
+    },
+    {
+        measure: 11.5,
+        notes: "1000",
+    },
+    {
+        measure: 12.5,
+        notes: "0100",
+    },
+    {
+        measure: 13,
+        notes: "0010",
+    },
+    {
+        measure: 13.5,
+        notes: "0100",
+    },
+    {
+        measure: 13.75,
+        notes: "1000",
+    },
+    {
+        measure: 14.5,
+        notes: "0001",
+    },
+    {
+        measure: 15,
+        notes: "0100",
+    },
+    {
+        measure: 15.5,
+        notes: "0010",
+    },
+    {
+        measure: 15.75,
+        notes: "1000",
+    },
+    {
+        measure: 16.5,
+        notes: "0001",
+    },
+    {
+        measure: 17,
+        notes: "0010",
+    },
+    {
+        measure: 18,
+        notes: "0001",
+    },
+    {
+        measure: 19.5,
+        notes: "1000",
+    },
 ]

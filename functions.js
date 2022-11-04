@@ -1,9 +1,9 @@
 function gameLoop() {
     // Logic
     updateSong();
-    moveNotes();
     // Draw
     drawMainComponents();
+    calcNotes();
     drawReceptors();
 }
 

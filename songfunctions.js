@@ -11,8 +11,6 @@ class Song {
 }
 
 let lastbeat;
-const tickSound = new Audio('snd/tick.mp3'); //temporary
-tickSound.volume = 0.4;
 const GHOST = new Song(220, 8, "Camellia - GHOST.ogg");
 
 function startSong() {
@@ -21,6 +19,8 @@ function startSong() {
     GHOST.starttime = performance.now();
 }
 
+const tickSound = new Audio('snd/tick.mp3'); //temporary
+tickSound.volume = 0.4;
 function updateSong() {
     GHOST.songposition = (currentTime - (GHOST.starttime + GHOST.songoffset));
     if (GHOST.songposition > lastbeat + GHOST.crotchet) {
@@ -30,31 +30,67 @@ function updateSong() {
     }
 }
 
-class Note {
-    constructor(notes) {
-        this.w = 50;
-        this.h = 50;
-        this.x = 204 + 0 * 60;
-        this.beat = notes.measure * GHOST.crotchet;
-        this.speed = 0.1;
-        this.distanceFromReceptor = this.beat - GHOST.songposition;
-        this.y = 400 - this.distanceFromReceptor;
-        ctx.fillStyle = "purple";
-        ctx.fillRect(this.x, this.y, this.w, this.h);
-    }
-}
-
-function moveNotes() {
+function calcNotes() {
     for (let i = 0; i < notes.length; i++) {
-        let newNote = new Note(notes[i]);
-        // console.log(notes[i])
-        console.log(newNote.distanceFromReceptor)
+        // Calculate y
+        notes[i].distanceFromReceptor = (notes[i].measure * GHOST.crotchet - GHOST.songposition);
+        notes[i].y = 400 - notes[i].distanceFromReceptor;
+        // Make an array
+        const splitNotes = Array.from(notes[i].notes, Number);
+        // Send to drawNotes function
+        drawNotes(notes[i].y, splitNotes);
     }
 }
 
+function drawNotes(y, splitNotes) {
+    if (y < 480 && y > -50) {
+        if (splitNotes[0] === 1) {
+            ctx.fillStyle = "purple";
+            ctx.fillRect(204, y, 50, 50);
+        }
+        if (splitNotes[1] === 1) {
+            ctx.fillStyle = "cyan";
+            ctx.fillRect(264, y, 50, 50);
+        }
+        if (splitNotes[2] === 1) {
+            ctx.fillStyle = "lime";
+            ctx.fillRect(324, y, 50, 50);
+        }
+        if (splitNotes[3] === 1) {
+            ctx.fillStyle = "red";
+            ctx.fillRect(384, y, 50, 50);
+        }
+    }
+}
+
+// To do: use base 2 number instead of string
 let notes = [
     {
+        measure: 4,
+        notes: "0000",
+    },
+    {
         measure: 5,
-        notes: 1000,
-    }
+        notes: "0100",
+    },
+    {
+        measure: 6,
+        notes: "0110",
+    },
+    {
+        measure: 7,
+        notes: "0010",
+    },
+    {
+        measure: 8,
+        notes: "0001",
+    },
+    {
+        measure: 9,
+        notes: "1001",
+    },
+    {
+        measure: 10,
+        notes: "1111",
+    },
 ]

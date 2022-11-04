@@ -33,7 +33,7 @@ function updateSong() {
 function calcNotes() {
     for (let i = 0; i < notes.length; i++) {
         // Calculate y
-        notes[i].distanceFromReceptor = (notes[i].measure * GHOST.crotchet - GHOST.songposition);
+        notes[i].distanceFromReceptor = (notes[i].measure * 4 * GHOST.crotchet - GHOST.songposition);
         notes[i].y = 400 - notes[i].distanceFromReceptor;
         // Make an array
         const splitNotes = Array.from(notes[i].notes, Number);
@@ -66,31 +66,24 @@ function drawNotes(y, splitNotes) {
 // To do: use base 2 number instead of string
 let notes = [
     {
-        measure: 4,
-        notes: "0000",
+        measure: 9,
+        notes: "1000",
+        // notes2:
+        // [1000,
+        // 0000,
+        // 0100,
+        // 0010,]
     },
     {
-        measure: 5,
+        measure: 9.5,
         notes: "0100",
     },
     {
-        measure: 6,
-        notes: "0110",
-    },
-    {
-        measure: 7,
+        measure: 9.75,
         notes: "0010",
     },
     {
-        measure: 8,
+        measure: 10.5,
         notes: "0001",
-    },
-    {
-        measure: 9,
-        notes: "1001",
-    },
-    {
-        measure: 10,
-        notes: "1111",
     },
 ]

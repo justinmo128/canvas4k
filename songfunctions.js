@@ -33,7 +33,7 @@ function updateSong() {
 function calcNotes() {
     for (let i = 0; i < notes.length; i++) {
         // Calculate y
-        notes[i].distanceFromReceptor = (notes[i].measure * 4 * GHOST.crotchet - GHOST.songposition);
+        notes[i].distanceFromReceptor = ((notes[i].measure - 1) * 4 * GHOST.crotchet - GHOST.songposition);
         notes[i].y = 400 - notes[i].distanceFromReceptor;
         // Make an array
         const splitNotes = Array.from(notes[i].notes, Number);

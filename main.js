@@ -36,7 +36,8 @@ function draw() {
         controlsScreen();
     }
     // Request Animation Frame
-    requestAnimationFrame(draw);
+    // requestAnimationFrame(draw);
+    setTimeout(draw, 1);
     currentTime = performance.now();
 }
 

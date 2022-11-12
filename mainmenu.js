@@ -20,6 +20,8 @@ function drawStart() {
     ctx.font = "22px Roboto";
     ctx.fillText(`Your controls:`, 330, 90);
     ctx.fillText(`${controls[0]}, ${controls[1]}, ${controls[2]}, ${controls[3]}`, 330, 120);
+    ctx.fillText("Use Arrow Keys and Enter to", 330, 440);
+    ctx.fillText("navigate the menu.", 330, 470);
 }
 
 function controlsScreen() {

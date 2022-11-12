@@ -1,5 +1,5 @@
 class Song {
-    constructor(bpm, offset, songsrc) {
+    constructor(bpm, offset, songsrc, notes) {
         this.bpm = bpm;
         this.crotchet = 60000 / bpm, // How long a beat is in ms
         this.songoffset = offset, // Length of the beginning of the sound file (where metadata is stored) in ms
@@ -7,12 +7,13 @@ class Song {
         this.songposition = currentTime - (this.starttime + this.songoffset); // Song position in ms
         this.audio = new Audio(`songs/${songsrc}`);
         this.audio.volume = 0.4;
+        this.notes = notes;
     }
 }
 
 // Global variables
 let lastbeat;
-let song;
+let songData;
 let notes;
 const tickSound = new Audio('snd/tick.mp3');
 tickSound.volume = 0.4;
@@ -22,25 +23,25 @@ const xmlhttp = new XMLHttpRequest();
 const GHOSTUrl = "songs/GHOST.json";
 xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
-    song = JSON.parse(this.responseText);
+    songData = JSON.parse(this.responseText);
   }
 };
-xmlhttp.open("GET", GHOSTUrl, false);
+xmlhttp.open("GET", GHOSTUrl, false); // It is possible to replace GHOSTUrl with something else
 xmlhttp.send();
 
 // Make a new song object
-const GHOST = new Song(song.bpm, song.offset, song.music);
+const song = new Song(songData.bpm, songData.offset, songData.music, songData.notes);
 
 function startSong() {
     lastbeat = 0;
-    GHOST.audio.play();
-    GHOST.starttime = performance.now();
+    song.audio.play();
+    song.starttime = performance.now();
 }
 
 function updateSong() {
-    GHOST.songposition = (currentTime - (GHOST.starttime + GHOST.songoffset));
-    if (GHOST.songposition > lastbeat + GHOST.crotchet) {
-        lastbeat = lastbeat + GHOST.crotchet;
+    song.songposition = (currentTime - (song.starttime + song.songoffset));
+    if (song.songposition > lastbeat + song.crotchet) {
+        lastbeat = lastbeat + song.crotchet;
         console.log("Beat occurred!");
         tickSound.play();
     }
@@ -52,11 +53,11 @@ function calcNotes() {
         // song.notes[i].length is the snap of the measure (eg. 4 is 4th snap)
         for (let j = 0; j < song.notes[i].length; j++) { 
             let noteMeasure = (i + j / song.notes[i].length);
-            let noteTime = noteMeasure * 4 * GHOST.crotchet;
-            if (GHOST.songposition - GHOST.crotchet < noteTime) {
+            let noteTime = noteMeasure * 4 * song.crotchet;
+            if (song.songposition - song.crotchet < noteTime) {
                 // Calculate y
-                // noteTime - GHOST.songposition is the distance from the receptor
-                y = 400 - (noteTime - GHOST.songposition); 
+                // noteTime - song.songposition is the distance from the receptor
+                y = 400 - (noteTime - song.songposition); 
                 // Send to drawNotes function
                 drawNotes(song.notes[i][j], y);
             };

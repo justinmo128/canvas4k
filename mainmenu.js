@@ -20,8 +20,8 @@ function drawStart() {
     ctx.font = "22px Roboto";
     ctx.fillText(`Your controls:`, 330, 90);
     ctx.fillText(`${controls[0]}, ${controls[1]}, ${controls[2]}, ${controls[3]}`, 330, 120);
-    ctx.fillText("Use Arrow Keys and Enter to", 330, 440);
-    ctx.fillText("navigate the menu.", 330, 470);
+    ctx.fillText("Use Arrow Keys, Enter and Esc", 330, 440);
+    ctx.fillText("to navigate the menu.", 330, 470);
 }
 
 function controlsScreen() {
@@ -89,8 +89,7 @@ function mainMenuHandler(keyPressed) {
                 mainMenuSelect = 4;
             }
         }
-    }
-    if (keyPressed === "Enter") {
+    } else if (keyPressed === "Enter") {
         if (gameState === "start") {
             if (mainMenuSelect === 0) {
                 startGame();
@@ -107,11 +106,23 @@ function mainMenuHandler(keyPressed) {
                 controlSel = true;
             }
         }
+    } else if (keyPressed === "Escape") {
+        if (gameState === "controls") {
+            if (!controlSel) {
+                gameState = "start";
+                mainMenuSelect = 1;
+                controlsNotEqual();
+            }
+        }
     }
 }
 
 function controlsHandler(keyPressed) {
-    if (controlSel) {
+    if (keyPressed === "Escape") {
+        setTimeout(() => {
+            controlSel = false;
+        }, 1);
+    } else {
         controls[mainMenuSelect] = keyPressed;
         controlSel = false;
     }

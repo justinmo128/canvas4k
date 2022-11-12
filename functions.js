@@ -58,7 +58,3 @@ function drawReceptors() {
         ctx.strokeRect(384, 400, 50, 50);
     }
 }
-
-function judge() {
-    
-}

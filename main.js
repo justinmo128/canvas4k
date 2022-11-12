@@ -44,8 +44,9 @@ function draw() {
 // Key down handler
 window.addEventListener("keydown", (e) => {
     let keyPressed = e.key;
-    controlsHandler(keyPressed);
-    if (gameState === "start" || gameState === "controls") {
+    if (controlSel) {
+        controlsHandler(keyPressed);
+    } else if (gameState === "start" || gameState === "controls") {
         mainMenuHandler(keyPressed);
     }
         

@@ -21,24 +21,25 @@ class Note {
 let lastbeat;
 let songData;
 let notes;
+let song;
 const tickSound = new Audio('snd/tick.mp3');
 tickSound.volume = 0.4;
 
-// JSON parser thing
-const xmlhttp = new XMLHttpRequest();
-const GHOSTUrl = "songs/GHOST.json";
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    songData = JSON.parse(this.responseText);
-  }
-};
-xmlhttp.open("GET", GHOSTUrl, false); // It is possible to replace GHOSTUrl with something else
-xmlhttp.send();
-
-// Make a new song object
-const song = new Song(songData.bpm, songData.offset, songData.music, songData.notes);
-
 function startSong() {
+    // JSON parser thing
+    const xmlhttp = new XMLHttpRequest();
+    const GHOSTUrl = "songs/GHOST.json";
+    xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        songData = JSON.parse(this.responseText);
+    }
+    };
+    xmlhttp.open("GET", GHOSTUrl, false); // It is possible to replace GHOSTUrl with something else
+    xmlhttp.send();
+
+    // Make a new song object
+    song = new Song(songData.bpm, songData.offset, songData.music, songData.notes);
+    
     lastbeat = 0;
     song.audio.play();
     song.starttime = performance.now();

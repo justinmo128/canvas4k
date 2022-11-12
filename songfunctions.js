@@ -11,6 +11,12 @@ class Song {
     }
 }
 
+class Note {
+    constructor() {
+        //WIP
+    }
+}
+
 // Global variables
 let lastbeat;
 let songData;

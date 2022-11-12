@@ -16,6 +16,19 @@ const judgments = {
 // Global Variables
 let controls = ["d", "f", "j", "k"];
 let held = [false, false, false, false];
+// let accuracy;
+// let combo;
+// let maxCombo;
+// let judgeCount = {
+//     marvelous: 0,
+//     perfect: 0,
+//     great: 0,
+//     good: 0,
+//     bad: 0,
+//     miss: 0,
+//     ok: 0,
+//     notgood: 0
+// }
 let currentTime;
 let lastFrameOccurence = performance.now();
 let gameState = "start";

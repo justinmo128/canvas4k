@@ -7,13 +7,13 @@ const tickSound = new Audio('snd/tick.mp3');
 tickSound.volume = 0.4;
 
 class Song {
-    constructor(bpm, offset, songsrc, notes) {
+    constructor(title, music, offset, bpm, notes) {
         this.bpm = bpm;
         this.crotchet = 60000 / bpm, // How long a beat is in ms
         this.songoffset = offset, // Length of the beginning of the sound file (where metadata is stored) in ms
         this.starttime;
         this.songposition = currentTime - (this.starttime + this.songoffset); // Song position in ms
-        this.audio = new Audio(`songs/${songsrc}`);
+        this.audio = new Audio(`songs/${title}/${music}`);
         this.audio.volume = 0.4;
         this.notes = notes;
     }
@@ -24,7 +24,7 @@ class Song {
             console.log("Beat occurred!");
             tickSound.play();
         }
-        if (song.songposition > song.notes.length * song.crotchet * 4) {
+        if (this.songposition > (this.audio.duration + 1) * 1000) {
             this.endSong();
         }
     }
@@ -41,7 +41,7 @@ class Note {
 }
 
 function startSong() {
-    let Url = "songs/GHOST.json";
+    let Url = "songs/GHOST/GHOST.json"; // It is possible to replace Url with something else
 
     // JSON parser thing
     const xmlhttp = new XMLHttpRequest();
@@ -50,11 +50,11 @@ function startSong() {
         songData = JSON.parse(this.responseText);
     }
     };
-    xmlhttp.open("GET", Url, false); // It is possible to replace GHOSTUrl with something else
+    xmlhttp.open("GET", Url, false);
     xmlhttp.send();
 
     // Make a new song object
-    song = new Song(songData.bpm, songData.offset, songData.music, songData.notes);
+    song = new Song(songData.title, songData.music, songData.offset, songData.bpm, songData.notes);
 
     lastbeat = 0;
     song.audio.play();

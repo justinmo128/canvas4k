@@ -1,6 +1,6 @@
 function gameLoop() {
     // Logic
-    updateSong();
+    song.updateSong();
     // Draw
     drawMainComponents();
     calcNotes();
@@ -57,4 +57,9 @@ function drawReceptors() {
         ctx.lineWidth = 2;
         ctx.strokeRect(384, 400, 50, 50);
     }
+}
+
+window.addEventListener("keydown", judge);
+function judge() {
+
 }

@@ -1,3 +1,11 @@
+// Global variables
+let lastbeat;
+let songData;
+let notes;
+let song;
+const tickSound = new Audio('snd/tick.mp3');
+tickSound.volume = 0.4;
+
 class Song {
     constructor(bpm, offset, songsrc, notes) {
         this.bpm = bpm;
@@ -9,6 +17,21 @@ class Song {
         this.audio.volume = 0.4;
         this.notes = notes;
     }
+    updateSong() {
+        this.songposition = (currentTime - (this.starttime + this.songoffset));
+        if (this.songposition > lastbeat + this.crotchet) {
+            lastbeat = lastbeat + this.crotchet;
+            console.log("Beat occurred!");
+            tickSound.play();
+        }
+        if (song.songposition > song.notes.length * song.crotchet * 4) {
+            this.endSong();
+        }
+    }
+    endSong() {
+        gameState = "start";
+        this.audio.load();
+    }
 }
 
 class Note {
@@ -17,41 +40,25 @@ class Note {
     }
 }
 
-// Global variables
-let lastbeat;
-let songData;
-let notes;
-let song;
-const tickSound = new Audio('snd/tick.mp3');
-tickSound.volume = 0.4;
-
 function startSong() {
+    let Url = "songs/GHOST.json";
+
     // JSON parser thing
     const xmlhttp = new XMLHttpRequest();
-    const GHOSTUrl = "songs/GHOST.json";
     xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         songData = JSON.parse(this.responseText);
     }
     };
-    xmlhttp.open("GET", GHOSTUrl, false); // It is possible to replace GHOSTUrl with something else
+    xmlhttp.open("GET", Url, false); // It is possible to replace GHOSTUrl with something else
     xmlhttp.send();
 
     // Make a new song object
     song = new Song(songData.bpm, songData.offset, songData.music, songData.notes);
-    
+
     lastbeat = 0;
     song.audio.play();
     song.starttime = performance.now();
-}
-
-function updateSong() {
-    song.songposition = (currentTime - (song.starttime + song.songoffset));
-    if (song.songposition > lastbeat + song.crotchet) {
-        lastbeat = lastbeat + song.crotchet;
-        console.log("Beat occurred!");
-        tickSound.play();
-    }
 }
 
 function calcNotes() {

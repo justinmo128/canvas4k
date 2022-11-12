@@ -48,6 +48,8 @@ window.addEventListener("keydown", (e) => {
         controlsHandler(keyPressed);
     } else if (gameState === "start" || gameState === "controls") {
         mainMenuHandler(keyPressed);
+    } else if (gameState ===  "gameLoop" && keyPressed === "Escape") {
+        song.endSong();
     }
         
     for (let i = 0; i < 4; i++) {

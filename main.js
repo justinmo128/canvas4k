@@ -50,7 +50,7 @@ function draw() {
     }
     // Request Animation Frame
     // requestAnimationFrame(draw);
-    setTimeout(draw, 1);
+    setTimeout(draw, 0);
     currentTime = performance.now();
 }
 

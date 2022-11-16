@@ -7,7 +7,7 @@ cnv.height = 480;
 // Global Variables (unchanged)
 const judgments = {
     marvelous: 22,
-    perfect: 45,
+    perfect: 35,
     great: 90,
     good: 135,
     bad: 180
@@ -34,51 +34,37 @@ let lastFrameOccurence = performance.now();
 let gameState = "start";
 let mainMenuSelect = 0;
 let controlSel = false;
-let buttonhover = new Image(260, 40);
-buttonhover.src = 'img/buttonhover.png';
+let downscroll = true;
 
 // Draw Function
 window.addEventListener("load", draw);
-
 function draw() {
     if (gameState === "start") {
-        mainMenu();
+        drawTopMenu();
+    } else if (gameState === "controls") {
+        drawControlsScreen();
+    } else if (gameState === "loading") {
+        drawLoadingScreen();
+    } else if (gameState === "songselect") {
+        drawSongSelectMenu();
     } else if (gameState === "gameLoop") {
         gameLoop();
-    } else if (gameState === "controls") {
-        controlsScreen();
-    }
+    };
     // Request Animation Frame
     // requestAnimationFrame(draw);
     setTimeout(draw, 0);
     currentTime = performance.now();
 }
 
-// Key down handler
-window.addEventListener("keydown", (e) => {
-    let keyPressed = e.key;
-    if (controlSel) {
-        controlsHandler(keyPressed);
-    } else if (gameState === "start" || gameState === "controls") {
-        mainMenuHandler(keyPressed);
-    } else if (gameState ===  "gameLoop" && keyPressed === "Escape") {
-        song.endSong();
-    }
-        
-    for (let i = 0; i < 4; i++) {
-        if (keyPressed === controls[i] && gameState === "gameLoop") {
-            held[i] = true;
-        }
-    }
-})
-
-// Key up handler
-window.addEventListener("keyup", (e) => {
-    let keyPressed = e.key;
-
-    for (let i = 0; i < 4; i++) {
-        if (keyPressed === controls[i] && gameState === "gameLoop") {
-            held[i] = false;
-        }
-    }
-})
+function drawMainComponents() {
+    // Background
+    ctx.fillStyle = "rgb(0,0,0)";
+    ctx.fillRect(0, 0, cnv.width, cnv.height);
+    // FPS
+    let fps = 1000 / (currentTime - lastFrameOccurence);
+    fps = Math.round(fps);
+    lastFrameOccurence = currentTime;
+    ctx.font = "14px Roboto";
+    ctx.fillStyle = "white";
+    ctx.fillText(`FPS: ${fps}`, 10, 20)
+}

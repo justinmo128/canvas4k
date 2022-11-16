@@ -1,15 +1,5 @@
-function mainMenu() {
-    drawMainComponents();
-    drawStart();
-    if (mainMenuSelect === 0) {
-        ctx.drawImage(buttonhover, 10, 169)
-    } else if (mainMenuSelect === 1) {
-        ctx.drawImage(buttonhover, 10, 219)
-    }
-    ctx.font = "30px Roboto";
-    ctx.fillText("Start", 35, 200);
-    ctx.fillText("Controls", 35, 250);
-}
+const buttonhover = new Image(260, 40);
+buttonhover.src = 'img/buttonhover.png';
 
 function drawStart() {
     ctx.fillStyle = "#007F96";
@@ -24,108 +14,57 @@ function drawStart() {
     ctx.fillText("to navigate the menu.", 330, 470);
 }
 
-function controlsScreen() {
+function drawTopMenu() {
+    drawMainComponents();
+    drawStart();
+    if (mainMenuSelect === 0) {
+        ctx.drawImage(buttonhover, 10, 169)
+    } else if (mainMenuSelect === 1) {
+        ctx.drawImage(buttonhover, 10, 219)
+    } else if (mainMenuSelect === 2) {
+        ctx.drawImage(buttonhover, 10, 269)
+    }
+    ctx.font = "30px Roboto";
+    ctx.fillText("Start", 35, 200);
+    ctx.fillText("Controls", 35, 250);
+    ctx.fillText(`Downscroll: ${downscroll}`, 35, 300);
+}
+
+function drawControlsScreen() {
     drawMainComponents();
     drawStart();
     drawControlSelect();
     if (mainMenuSelect === 0) {
-        ctx.fillStyle = "purple";
-        ctx.fillRect(20, 40, 50, 50);
+        quickDrawRect("purple", 20, 40, true);
     } else if (mainMenuSelect === 1) {
-        ctx.fillStyle = "cyan";
-        ctx.fillRect(20, 100, 50, 50);
+        quickDrawRect("cyan", 20, 100, true);
     } else if (mainMenuSelect === 2) {
-        ctx.fillStyle = "lime";
-        ctx.fillRect(20, 160, 50, 50);
+        quickDrawRect("lime", 20, 160, true);
     } else if (mainMenuSelect === 3) {
-        ctx.fillStyle = "red";
-        ctx.fillRect(20, 220, 50, 50);
+        quickDrawRect("red", 20, 220, true);
     } else if (mainMenuSelect === 4) {
         ctx.drawImage(buttonhover, 10, 369)
     }
     ctx.font = "30px Roboto";
     // Left
-    ctx.strokeStyle = "purple";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(20, 40, 50, 50);
+    quickDrawRect("purple", 20, 40, false);
     ctx.fillStyle = "white";
     ctx.fillText("Left", 90, 75);
     // Down
-    ctx.strokeStyle = "cyan";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(20, 100, 50, 50);
+    quickDrawRect("cyan", 20, 100, false);
     ctx.fillStyle = "white";
     ctx.fillText("Down", 90, 135);
     // Up
-    ctx.strokeStyle = "lime";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(20, 160, 50, 50);
+    quickDrawRect("lime", 20, 160, false);
     ctx.fillStyle = "white";
     ctx.fillText("Up", 90, 195);
     // Right
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(20, 220, 50, 50);
+    quickDrawRect("red", 20, 220, false);
     ctx.fillStyle = "white";
     ctx.fillText("Right", 90, 255);
     // Back
     ctx.fillStyle = "white";
     ctx.fillText("Back", 35, 400);
-}
-
-function mainMenuHandler(keyPressed) {
-    if (keyPressed === "ArrowDown") {
-        mainMenuSelect++;
-        if (gameState === "start" && mainMenuSelect === 2 ||
-        gameState === "controls" && mainMenuSelect === 5) {
-            mainMenuSelect = 0;
-        }
-    } else if (keyPressed === "ArrowUp") {
-        mainMenuSelect--;
-        if (mainMenuSelect === -1) {
-            if (gameState === "start") {
-                mainMenuSelect = 1;
-            } else if (gameState === "controls") {
-                mainMenuSelect = 4;
-            }
-        }
-    } else if (keyPressed === "Enter") {
-        if (gameState === "start") {
-            if (mainMenuSelect === 0) {
-                startGame();
-            } else if (mainMenuSelect === 1) {
-                gameState = "controls";
-                mainMenuSelect = 4;
-            }
-        } else if (gameState === "controls") {
-            if (mainMenuSelect === 4) {
-                gameState = "start";
-                mainMenuSelect = 1;
-                controlsNotEqual();
-            } else {
-                controlSel = true;
-            }
-        }
-    } else if (keyPressed === "Escape") {
-        if (gameState === "controls") {
-            if (!controlSel) {
-                gameState = "start";
-                mainMenuSelect = 1;
-                controlsNotEqual();
-            }
-        }
-    }
-}
-
-function controlsHandler(keyPressed) {
-    if (keyPressed === "Escape") {
-        setTimeout(() => {
-            controlSel = false;
-        }, 1);
-    } else {
-        controls[mainMenuSelect] = keyPressed;
-        controlSel = false;
-    }
 }
 
 function drawControlSelect() {
@@ -150,10 +89,4 @@ function controlsNotEqual() {
             }
         }
     }
-}
-
-function startGame() {
-    startSong();
-    controlsNotEqual();
-    gameState = "gameLoop";
 }

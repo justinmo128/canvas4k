@@ -1,11 +1,3 @@
-// Global variables
-let lastbeat;
-let songData;
-let notes;
-let song;
-const tickSound = new Audio('snd/tick.mp3');
-tickSound.volume = 0.4;
-
 class Song {
     constructor(title, music, offset, bpm, notes) {
         this.bpm = bpm;
@@ -35,30 +27,55 @@ class Song {
 }
 
 class Note {
-    constructor() {
-        //WIP
+    constructor(position, type, time) {
+        this.position = position;
+        this.type = type;
+        this.time = time;
+        this.isHit = false;
+    }
+    update() {
+        // Calculate y
+        // noteTime - song.songposition is the distance from the receptor
+        if (downscroll) {
+            y = 400 - (noteTime - song.songposition); 
+        } else {
+            y = noteTime - song.songposition;
+        }
     }
 }
 
-function startSong() {
-    let Url = "songs/GHOST/GHOST.json"; // It is possible to replace Url with something else
-
-    // JSON parser thing
-    const xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        songData = JSON.parse(this.responseText);
+class Hold {
+    constructor() {
+        // WIP
     }
-    };
-    xmlhttp.open("GET", Url, false);
-    xmlhttp.send();
+}
 
+// Song Variables
+let song;
+let lastbeat;
+const tickSound = new Audio('snd/tick.mp3');
+tickSound.volume = 0.4;
+
+function startSong() {
     // Make a new song object
     song = new Song(songData.title, songData.music, songData.offset, songData.bpm, songData.notes);
 
     lastbeat = 0;
     song.audio.play();
     song.starttime = performance.now();
+}
+
+function createNotes() {
+    // song.notes.length is the amount of measures
+    for (let i = 0; i < song.notes.length; i++) {
+        // song.notes[i].length is the snap of the measure (eg. 4 is 4th snap)
+        for (let j = 0; j < song.notes[i].length; j++) { 
+            if (song.notes[i][j].charAt(0) == 1) {new Note("left", "normal", 0)}
+            else if (song.notes[i][j].charAt(1) == 1) {new Note("down", "normal", 0)}
+            else if (song.notes[i][j].charAt(2) == 1) {new Note("up", "normal", 0)}
+            else if (song.notes[i][j].charAt(3) == 1) {new Note("right", "normal", 0)}
+        }
+    }
 }
 
 function calcNotes() {
@@ -71,7 +88,11 @@ function calcNotes() {
             if (song.songposition - song.crotchet < noteTime) {
                 // Calculate y
                 // noteTime - song.songposition is the distance from the receptor
-                y = 400 - (noteTime - song.songposition); 
+                if (downscroll) {
+                    y = 400 - (noteTime - song.songposition); 
+                } else {
+                    y = noteTime - song.songposition;
+                }
                 // Send to drawNotes function
                 drawNotes(song.notes[i][j], y);
             };
@@ -80,19 +101,19 @@ function calcNotes() {
 }
 
 function drawNotes(notes, y) {
-    if (notes.charAt(0) == 1) {
+    if (notes.charAt(0) == 1 || notes.charAt(0) == 2 || notes.charAt(0) == 3) {
         ctx.fillStyle = "purple";
         ctx.fillRect(204, y, 50, 50);
     }
-    if (notes.charAt(1) == 1) {
+    if (notes.charAt(1) == 1 || notes.charAt(1) == 2 || notes.charAt(1) == 3) {
         ctx.fillStyle = "cyan";
         ctx.fillRect(264, y, 50, 50);
     }
-    if (notes.charAt(2) == 1) {
+    if (notes.charAt(2) == 1 || notes.charAt(2) == 2 || notes.charAt(2) == 3) {
         ctx.fillStyle = "lime";
         ctx.fillRect(324, y, 50, 50);
     }
-    if (notes.charAt(3) == 1) {
+    if (notes.charAt(3) == 1 || notes.charAt(3) == 2 || notes.charAt(3) == 3) {
         ctx.fillStyle = "red";
         ctx.fillRect(384, y, 50, 50);
     }

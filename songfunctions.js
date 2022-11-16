@@ -63,9 +63,9 @@ const tickSound = new Audio('snd/tick.mp3');
 tickSound.volume = 0.4;
 
 function createNotes() {
-    // song.notes.length is the amount of measures
+    let amountMeasures = song.notes.length;
     for (let i = 0; i < song.notes.length; i++) {
-        // song.notes[i].length is the snap of the measure (eg. 4 is 4th snap)
+        let snap = song.notes[i].length;
         for (let j = 0; j < song.notes[i].length; j++) { 
             if (song.notes[i][j].charAt(0) == 1) {new Note("left", "normal", 0)}
             else if (song.notes[i][j].charAt(1) == 1) {new Note("down", "normal", 0)}
@@ -76,11 +76,11 @@ function createNotes() {
 }
 
 function calcNotes() {
-    // song.notes.length is the amount of measures
-    for (let i = 0; i < song.notes.length; i++) { 
-        // song.notes[i].length is the snap of the measure (eg. 4 is 4th snap)
-        for (let j = 0; j < song.notes[i].length; j++) { 
-            let noteMeasure = (i + j / song.notes[i].length);
+    let amountMeasures = song.notes.length;
+    for (let i = 0; i < amountMeasures; i++) { 
+        let snap = song.notes[i].length;
+        for (let j = 0; j < snap; j++) { 
+            let noteMeasure = (i + j / snap);
             let noteTime = noteMeasure * 4 * song.crotchet;
             if (song.songposition - song.crotchet < noteTime) {
                 // Calculate y

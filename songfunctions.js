@@ -9,6 +9,12 @@ class Song {
         this.audio.volume = 0.4;
         this.notes = notes;
     }
+    startSong() {
+        lastbeat = 0;
+        this.audio.currentTime = 0;
+        this.audio.play();
+        this.starttime = performance.now();
+    }
     updateSong() {
         this.songposition = (currentTime - (this.starttime + this.songoffset));
         if (this.songposition > lastbeat + this.crotchet) {
@@ -21,8 +27,8 @@ class Song {
         }
     }
     endSong() {
-        gameState = "start";
-        this.audio.load();
+        gameState = "songselect";
+        this.audio.currentTime = 0;
     }
 }
 
@@ -55,15 +61,6 @@ let song;
 let lastbeat;
 const tickSound = new Audio('snd/tick.mp3');
 tickSound.volume = 0.4;
-
-function startSong() {
-    // Make a new song object
-    song = new Song(songData.title, songData.music, songData.offset, songData.bpm, songData.notes);
-
-    lastbeat = 0;
-    song.audio.play();
-    song.starttime = performance.now();
-}
 
 function createNotes() {
     // song.notes.length is the amount of measures

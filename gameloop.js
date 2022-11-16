@@ -1,5 +1,5 @@
 function startGame() {
-    startSong();
+    song.startSong();
     // createNotes();
     controlsNotEqual();
     gameState = "gameLoop";

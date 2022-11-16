@@ -48,7 +48,7 @@ function mainMenuHandler(keyPressed) {
     } else if (keyPressed === "Enter") {
         if (gameState === "start") {
             if (mainMenuSelect === 0) {
-                loadSongs();
+                loadSongs(0);
             } else if (mainMenuSelect === 1) {
                 gameState = "controls";
                 mainMenuSelect = 4;
@@ -65,12 +65,10 @@ function mainMenuHandler(keyPressed) {
             }
         }
     } else if (keyPressed === "Escape") {
-        if (gameState === "controls") {
-            if (!controlSel) {
-                gameState = "start";
-                mainMenuSelect = 1;
-                controlsNotEqual();
-            }
+        if (gameState === "controls" && !controlSel) {
+            gameState = "start";
+            mainMenuSelect = 1;
+            controlsNotEqual();
         }
     }
 }
@@ -87,5 +85,20 @@ function controlsHandler(keyPressed) {
 function songSelectHandler(keyPressed) {
     if (keyPressed === "Enter") {
         startGame();
+    } else if (keyPressed === "Escape") {
+        gameState = "start";
+        mainMenuSelect = 0;
+    } else if (keyPressed === "ArrowDown") {
+        mainMenuSelect++;
+        if (mainMenuSelect >= songList.length) {
+            mainMenuSelect = 0;
+        }
+        loadSongs(mainMenuSelect);
+    } else if (keyPressed === "ArrowUp") {
+        mainMenuSelect--;
+        if (mainMenuSelect < 0) {
+            mainMenuSelect = (songList.length - 1);
+        }
+        loadSongs(mainMenuSelect);
     }
 }

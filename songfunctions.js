@@ -32,7 +32,7 @@ class Song {
         }
     }
     endSong() {
-        gameState = "songselect";
+        loadSongs();
         this.audio.currentTime = 0;
     }
 }

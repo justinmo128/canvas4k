@@ -68,31 +68,36 @@ function drawRightSide() {
     ctx.fillStyle = "black";
     ctx.fillRect(cnv.width / 2, 0, cnv.width / 2, cnv.height);
     ctx.fillStyle = "gray";
-    ctx.fillRect(cnv.width / 2, 192, cnv.width / 2, 96)
+    // ctx.fillRect(cnv.width / 2, 192, cnv.width / 2, 96)
+    ctx.fillRect(cnv.width / 2, 0, cnv.width / 2, 96)
     // Lines
     ctx.fillStyle = "white";
     for (let i = 1; i < 5; i++) {
         ctx.fillRect(cnv.width / 2, i * 96 - 1, cnv.width / 2, 2)
     }
     // Text
+    let slots = [
+        {title: "title", artist: "artist", y: 41}, // Top (1st slot)
+        {title: "title", artist: "artist", y: 137},
+        {title: "title", artist: "artist", y: 233}, // Center (3rd slot)
+        {title: "title", artist: "artist", y: 329},
+        {title: "title", artist: "artist", y: 425}, // Bottom (5th slot)
+    ];
     let x = mainMenuSelect;
-    ctx.font = "25px Roboto";
-    for (let i = 0; i < songData.length; i++) {
-        if (x + i < songData.length) {
-            ctx.fillText(songData[x + i].title, 330, 233 + i * 96);
-            ctx.fillText(songData[x + i].artist, 330, 263 + i * 96);
-        } else if (x + i == songData.length && x == songData.length - 2) {
-            ctx.fillText(songData[0].title, 330, 233 + 2 * 96);
-            ctx.fillText(songData[0].artist, 330, 263 + 2 * 96);
-        } else if (x + i == songData.length && x == songData.length - 1) {
-            ctx.fillText(songData[0].title, 330, 233 + 96);
-            ctx.fillText(songData[0].artist, 330, 263 + 96);
-            ctx.fillText(songData[1].title, 330, 233 + 2 * 96);
-            ctx.fillText(songData[1].artist, 330, 263 + 2 * 96);
+    for (let i = 0; i < 5; i++) {
+        if (x + i < songList.length) {
+            slots[i].title = songData[x + i].title;
+            slots[i].artist = songData[x + i].artist;
+        } else {
+            slots[i].title = songData[i % (songData.length - x)].title;
+            slots[i].artist = songData[i % (songData.length - x)].artist;
         }
     }
-    // ctx.fillText(songData[x].title, 330, 233);
-    // ctx.fillText(songData[x].artist, 330, 263);
+    ctx.font = "25px Roboto";
+    for (let i = 0; i < slots.length; i++) {
+        ctx.fillText(slots[i].title, 330, slots[i].y);
+        ctx.fillText(slots[i].artist, 330, slots[i].y + 30);
+    }
 }
 
 function determineColour(x) {

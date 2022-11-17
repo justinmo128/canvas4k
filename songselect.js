@@ -26,7 +26,7 @@ function drawLoadingScreen() {
     ctx.font = "20px Roboto";
     ctx.fillText("Song Select", 10, 30);
     ctx.font = "40px Roboto";
-    ctx.fillText("Loading Song...", 10, 120);
+    ctx.fillText("Loading Songs...", 10, 120);
 }
 
 function drawSongSelectMenu() {

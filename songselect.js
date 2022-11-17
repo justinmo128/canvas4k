@@ -89,8 +89,8 @@ function drawRightSide() {
             slots[i].title = songData[x + i].title;
             slots[i].artist = songData[x + i].artist;
         } else {
-            slots[i].title = songData[i % (songData.length - x)].title;
-            slots[i].artist = songData[i % (songData.length - x)].artist;
+            slots[i].title = songData[x % i - 1].title;
+            slots[i].artist = songData[x % i - 1].artist;
         }
     }
     ctx.font = "25px Roboto";

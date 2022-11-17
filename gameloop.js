@@ -1,5 +1,5 @@
 function startGame() {
-    song.startSong();
+    songs[mainMenuSelect].startSong();
     // createNotes();
     controlsNotEqual();
     gameState = "gameLoop";
@@ -7,7 +7,7 @@ function startGame() {
 
 function gameLoop() {
     // Logic
-    song.updateSong();
+    currentSong.updateSong();
     // Draw
     drawMainComponents();
     calcNotes();

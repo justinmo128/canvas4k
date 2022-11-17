@@ -10,10 +10,15 @@ class Song {
         this.notes = notes;
     }
     startSong() {
+        currentSong = songs[mainMenuSelect]
         lastbeat = 0;
+        this.audio.pause();
         this.audio.currentTime = 0;
-        this.audio.play();
-        this.starttime = performance.now();
+        setTimeout(() => {
+            this.audio.play();
+            this.starttime = performance.now();
+        },
+        this.crotchet * 4);
     }
     updateSong() {
         this.songposition = (currentTime - (this.starttime + this.songoffset));
@@ -57,61 +62,67 @@ class Hold {
 }
 
 // Song Variables
-let song;
+let currentSong;
 let lastbeat;
 const tickSound = new Audio('snd/tick.mp3');
 tickSound.volume = 0.4;
 
 function createNotes() {
-    let amountMeasures = song.notes.length;
-    for (let i = 0; i < song.notes.length; i++) {
-        let snap = song.notes[i].length;
-        for (let j = 0; j < song.notes[i].length; j++) { 
-            if (song.notes[i][j].charAt(0) == 1) {new Note("left", "normal", 0)}
-            else if (song.notes[i][j].charAt(1) == 1) {new Note("down", "normal", 0)}
-            else if (song.notes[i][j].charAt(2) == 1) {new Note("up", "normal", 0)}
-            else if (song.notes[i][j].charAt(3) == 1) {new Note("right", "normal", 0)}
+    let amountMeasures = currentSong.notes.length;
+    for (let i = 0; i < amountMeasures; i++) {
+        let snap = currentSong.notes[i].length;
+        for (let j = 0; j < snap; j++) { 
+            if (currentSong.notes[i][j].charAt(0) == 1) {new Note("left", "normal", 0)}
+            else if (currentSong.notes[i][j].charAt(1) == 1) {new Note("down", "normal", 0)}
+            else if (currentSong.notes[i][j].charAt(2) == 1) {new Note("up", "normal", 0)}
+            else if (currentSong.notes[i][j].charAt(3) == 1) {new Note("right", "normal", 0)}
         }
     }
 }
 
 function calcNotes() {
-    let amountMeasures = song.notes.length;
+    let amountMeasures = currentSong.notes.length;
     for (let i = 0; i < amountMeasures; i++) { 
-        let snap = song.notes[i].length;
+        let snap = currentSong.notes[i].length;
         for (let j = 0; j < snap; j++) { 
             let noteMeasure = (i + j / snap);
-            let noteTime = noteMeasure * 4 * song.crotchet;
-            if (song.songposition - song.crotchet < noteTime) {
+            let noteTime = noteMeasure * 4 * currentSong.crotchet;
+            if (currentSong.songposition - currentSong.crotchet < noteTime) {
                 // Calculate y
                 // noteTime - song.songposition is the distance from the receptor
                 if (downscroll) {
-                    y = 400 - (noteTime - song.songposition); 
+                    y = 400 - (noteTime - currentSong.songposition); 
                 } else {
-                    y = noteTime - song.songposition;
+                    y = noteTime - currentSong.songposition;
                 }
                 // Send to drawNotes function
-                drawNotes(song.notes[i][j], y);
+                drawNotes(currentSong.notes[i][j], y);
             };
         }
     }
 }
 
 function drawNotes(notes, y) {
-    if (notes.charAt(0) == 1 || notes.charAt(0) == 2 || notes.charAt(0) == 3) {
+    if (notes.charAt(0) == 1 || notes.charAt(0) == 2) {
         ctx.fillStyle = "purple";
         ctx.fillRect(204, y, 50, 50);
     }
-    if (notes.charAt(1) == 1 || notes.charAt(1) == 2 || notes.charAt(1) == 3) {
+    if (notes.charAt(1) == 1 || notes.charAt(1) == 2) {
         ctx.fillStyle = "cyan";
         ctx.fillRect(264, y, 50, 50);
     }
-    if (notes.charAt(2) == 1 || notes.charAt(2) == 2 || notes.charAt(2) == 3) {
+    if (notes.charAt(2) == 1 || notes.charAt(2) == 2) {
         ctx.fillStyle = "lime";
         ctx.fillRect(324, y, 50, 50);
     }
-    if (notes.charAt(3) == 1 || notes.charAt(3) == 2 || notes.charAt(3) == 3) {
+    if (notes.charAt(3) == 1 || notes.charAt(3) == 2) {
         ctx.fillStyle = "red";
         ctx.fillRect(384, y, 50, 50);
+    }
+    for (let i = 0; i < 4; i++) {
+        if (notes.charAt(i) == 3) {
+            ctx.fillStyle = "gray";
+            ctx.fillRect(204 + (i * 60), y, 50, 50);
+        }
     }
 }

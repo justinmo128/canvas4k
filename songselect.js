@@ -77,8 +77,22 @@ function drawRightSide() {
     // Text
     let x = mainMenuSelect;
     ctx.font = "25px Roboto";
-    ctx.fillText(songData[x].title, 330, 233);
-    ctx.fillText(songData[x].artist, 330, 263);
+    for (let i = 0; i < songData.length; i++) {
+        if (x + i < songData.length) {
+            ctx.fillText(songData[x + i].title, 330, 233 + i * 96);
+            ctx.fillText(songData[x + i].artist, 330, 263 + i * 96);
+        } else if (x + i == songData.length && x == songData.length - 2) {
+            ctx.fillText(songData[0].title, 330, 233 + 2 * 96);
+            ctx.fillText(songData[0].artist, 330, 263 + 2 * 96);
+        } else if (x + i == songData.length && x == songData.length - 1) {
+            ctx.fillText(songData[0].title, 330, 233 + 96);
+            ctx.fillText(songData[0].artist, 330, 263 + 96);
+            ctx.fillText(songData[1].title, 330, 233 + 2 * 96);
+            ctx.fillText(songData[1].artist, 330, 263 + 2 * 96);
+        }
+    }
+    // ctx.fillText(songData[x].title, 330, 233);
+    // ctx.fillText(songData[x].artist, 330, 263);
 }
 
 function determineColour(x) {

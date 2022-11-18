@@ -1,6 +1,6 @@
 let songData = [];
 let songs = [];
-let songList = ["GHOST", "Bopeebo", "Airborne Robots", "Blue Zenith", "Exit This Earth's Atomosphere"];
+let songList = ["GHOST", "Bopeebo", "Airborne Robots", "Blue Zenith", "Exit This Earth's Atomosphere", "Light It Up"];
 
 function loadSongs() { // Called in keyhandlers.js
     gameState = "loading";
@@ -56,11 +56,10 @@ function drawLeftSide() {
     ctx.fillText(`${songData[x].bpm} BPM`, 10, 170);
     ctx.fillText(`Length: ${Math.floor(songs[x].audio.duration / 60)}:${Math.round(songs[x].audio.duration % 60)}`, 10, 190);
     // Difficulty
-    determineColour(x);
     ctx.font = "20px Roboto";
     ctx.fillText(`Difficulty:`, 10, 250)
     ctx.font = "30px Roboto";
-    ctx.fillText(`${songData[x].charttype} ${songData[x].difficulty}`, 10, 280);
+    ctx.fillText(`${determineDifficulty(songData[x].difficulty)} ${songData[x].difficulty}`, 10, 280);
 }
 
 function drawRightSide() {
@@ -68,12 +67,11 @@ function drawRightSide() {
     ctx.fillStyle = "black";
     ctx.fillRect(cnv.width / 2, 0, cnv.width / 2, cnv.height);
     ctx.fillStyle = "gray";
-    // ctx.fillRect(cnv.width / 2, 192, cnv.width / 2, 96)
-    ctx.fillRect(cnv.width / 2, 0, cnv.width / 2, 96)
+    ctx.fillRect(cnv.width / 2, 0, cnv.width / 2, 96);
     // Lines
     ctx.fillStyle = "white";
     for (let i = 1; i < 5; i++) {
-        ctx.fillRect(cnv.width / 2, i * 96 - 1, cnv.width / 2, 2)
+        ctx.fillRect(cnv.width / 2, i * 96 - 1, cnv.width / 2, 2);
     }
     // Text
     let slots = [
@@ -85,13 +83,8 @@ function drawRightSide() {
     ];
     let x = mainMenuSelect;
     for (let i = 0; i < 5; i++) {
-        if (x + i < songList.length) {
-            slots[i].title = songData[x + i].title;
-            slots[i].artist = songData[x + i].artist;
-        } else {
-            slots[i].title = songData[x % i - 1].title;
-            slots[i].artist = songData[x % i - 1].artist;
-        }
+        slots[i].title = songData[(x + i) % songData.length].title;
+        slots[i].artist = songData[(x + i) % songData.length].artist;
     }
     ctx.font = "25px Roboto";
     for (let i = 0; i < slots.length; i++) {
@@ -100,16 +93,22 @@ function drawRightSide() {
     }
 }
 
-function determineColour(x) {
-    if (songData[x].charttype === "Challenge") {
-        ctx.fillStyle = "purple";
-    } else if (songData[x].charttype === "Hard") {
-        ctx.fillStyle = "red";
-    } else if (songData[x].charttype === "Medium") {
-        ctx.fillStyle = "yellow";
-    } else if (songData[x].charttype === "Easy") {
-        ctx.fillStyle = "lime";
-    } else if (songData[x].charttype === "Beginner") {
+function determineDifficulty(x) {
+    // Easy: 1-6, Normal: 7-9, Hard: 10-13, Insane: 13-18, Challenge: 18+
+    if (x >= 18) {
         ctx.fillStyle = "cyan";
+        return "Challenge";
+    } else if (x >= 14 && x < 18) {
+        ctx.fillStyle = "purple";
+        return "Insane";
+    } else if (x >= 10 && x < 14) {
+        ctx.fillStyle = "red";
+        return "Hard";
+    } else if (x >= 7 && x < 10) {
+        ctx.fillStyle = "yellow";
+        return "Medium";
+    } else {
+        ctx.fillStyle = "lime";
+        return "Easy";
     }
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f5d77cf4-42a5-44ff-808c-dc41a3cac34e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/songs/Airborne Robots/Airborne Robots.json" beforeDir="false" afterPath="$PROJECT_DIR$/songs/Airborne Robots/Airborne Robots.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/songs/Blue Zenith/Blue Zenith.json" beforeDir="false" afterPath="$PROJECT_DIR$/songs/Blue Zenith/Blue Zenith.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/songs/Exit This Earth's Atomosphere/Exit This Earth's Atomosphere.json" beforeDir="false" afterPath="$PROJECT_DIR$/songs/Exit This Earth's Atomosphere/Exit This Earth's Atomosphere.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/songs/GHOST/GHOST.json" beforeDir="false" afterPath="$PROJECT_DIR$/songs/GHOST/GHOST.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/songselect.js" beforeDir="false" afterPath="$PROJECT_DIR$/songselect.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2HiMI7CdE4gPRI8Mhw2NC9zjFUr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/terux/Documents/coding/converter"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f5d77cf4-42a5-44ff-808c-dc41a3cac34e" name="Changes" comment="" />
+      <created>1668763368971</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1668763368971</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

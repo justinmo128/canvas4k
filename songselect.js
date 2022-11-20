@@ -75,14 +75,14 @@ function drawRightSide() {
     }
     // Text
     let slots = [
+        {title: "title", artist: "artist", y: 41}, // Top (1st slot)
+        {title: "title", artist: "artist", y: 137},
         {title: "title", artist: "artist", y: 233}, // Center (3rd slot)
         {title: "title", artist: "artist", y: 329},
         {title: "title", artist: "artist", y: 425}, // Bottom (5th slot)
-        {title: "title", artist: "artist", y: 41}, // Top (1st slot)
-        {title: "title", artist: "artist", y: 137},
     ];
     let x = mainMenuSelect;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
         slots[i].title = songData[(x + i) % songData.length].title;
         slots[i].artist = songData[(x + i) % songData.length].artist;
     }

@@ -1,8 +1,12 @@
 function startGame() {
     song[mainMenuSelect].startSong();
-    // createNotes();
     controlsNotEqual();
-    gameState = "gameLoop";
+    createNotes();
+}
+
+function loadingNotes() {
+    drawMainComponents();
+    drawReceptors();
 }
 
 function gameLoop() {
@@ -10,7 +14,11 @@ function gameLoop() {
     currentSong.updateSong();
     // Draw
     drawMainComponents();
-    calcNotes();
+    // calcNotes();
+    for (let i = 0; i < notes.length; i++) {
+        notes[i].update();
+        notes[i].draw();
+    }
     drawReceptors();
 }
 

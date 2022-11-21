@@ -42,23 +42,35 @@ class Song {
 }
 
 class Note {
-    constructor(position, type, time) {
-        this.position = position;
-        this.type = type;
+    constructor(dir, time) {
+        this.dir = dir; // 0 - left, 1 - down, 2 - up, 3 - right
         this.time = time;
         this.isHit = false;
+        this.y;
     }
     update() {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
         if (downscroll) {
-            y = 400 - (noteTime - song.songposition); 
+            this.y = 400 - (this.time - currentSong.songposition); 
         } else {
-            y = noteTime - song.songposition;
+            this.y = this.time - currentSong.songposition;
         }
     }
     draw() {
-
+        if (this.dir == 0) {
+            ctx.fillStyle = "purple";
+            ctx.fillRect(204, this.y, 50, 50);
+        } else if (this.dir == 1) {
+            ctx.fillStyle = "cyan";
+            ctx.fillRect(264, this.y, 50, 50);
+        } else if (this.dir == 2) {
+            ctx.fillStyle = "lime";
+            ctx.fillRect(324, this.y, 50, 50);
+        } else if (this.dir == 3) {
+            ctx.fillStyle = "red";
+            ctx.fillRect(384, this.y, 50, 50);
+        }
     }
 }
 
@@ -76,58 +88,20 @@ tickSound.volume = 0.4;
 let notes = [];
 
 function createNotes() {
+    gameState = "loadingNotes";
     let amountMeasures = currentSong.notes.length;
+    let index = 0;
     for (let i = 0; i < amountMeasures; i++) {
         let snap = currentSong.notes[i].length;
         for (let j = 0; j < snap; j++) { 
-            
-        }
-    }
-}
-
-function calcNotes() {
-    let amountMeasures = currentSong.notes.length;
-    for (let i = 0; i < amountMeasures; i++) { 
-        let snap = currentSong.notes[i].length;
-        for (let j = 0; j < snap; j++) { 
-            let noteMeasure = (i + j / snap);
-            let noteTime = noteMeasure * 4 * currentSong.crotchet;
-            if (currentSong.songposition - currentSong.crotchet < noteTime) {
-                // Calculate y
-                // noteTime - song.songposition is the distance from the receptor
-                if (downscroll) {
-                    y = 400 - (noteTime - currentSong.songposition); 
-                } else {
-                    y = noteTime - currentSong.songposition;
+            for (let k = 0; k < 4; k++) {
+                if (currentSong.notes[i][j].charAt(k) == 1) {
+                    let noteTime = (i + j / snap) * 4 * currentSong.crotchet;
+                    notes[index] = new Note(k, noteTime);
+                    index++;
                 }
-                // Send to drawNotes function
-                drawNotes(currentSong.notes[i][j], y);
-            };
+            }
         }
     }
-}
-
-function drawNotes(notes, y) {
-    if (notes.charAt(0) == 1 || notes.charAt(0) == 2) {
-        ctx.fillStyle = "purple";
-        ctx.fillRect(204, y, 50, 50);
-    }
-    if (notes.charAt(1) == 1 || notes.charAt(1) == 2) {
-        ctx.fillStyle = "cyan";
-        ctx.fillRect(264, y, 50, 50);
-    }
-    if (notes.charAt(2) == 1 || notes.charAt(2) == 2) {
-        ctx.fillStyle = "lime";
-        ctx.fillRect(324, y, 50, 50);
-    }
-    if (notes.charAt(3) == 1 || notes.charAt(3) == 2) {
-        ctx.fillStyle = "red";
-        ctx.fillRect(384, y, 50, 50);
-    }
-    for (let i = 0; i < 4; i++) {
-        if (notes.charAt(i) == 3) {
-            ctx.fillStyle = "gray";
-            ctx.fillRect(204 + (i * 60), y, 50, 50);
-        }
-    }
+    gameState = "gameLoop";
 }

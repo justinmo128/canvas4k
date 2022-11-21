@@ -47,6 +47,8 @@ function draw() {
         drawLoadingScreen();
     } else if (gameState === "songselect") {
         drawSongSelectMenu();
+    } else if (gameState === "loadingNotes") {
+        loadingNotes();
     } else if (gameState === "gameLoop") {
         gameLoop();
     };

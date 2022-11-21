@@ -8,7 +8,7 @@ window.addEventListener("keydown", (e) => {
     } else if (gameState === "songselect") {
         songSelectHandler(keyPressed);
     } else if (gameState ===  "gameLoop" && keyPressed === "Escape") {
-        song.endSong();
+        currentSong.endSong();
     }
         
     for (let i = 0; i < 4; i++) {
@@ -86,20 +86,20 @@ function songSelectHandler(keyPressed) {
     if (keyPressed === "Enter") {
         startGame();
     } else if (keyPressed === "Escape") {
-        songs[mainMenuSelect].audio.pause();
-        songs[mainMenuSelect].audio.currentTime = 0;
+        song[mainMenuSelect].audio.pause();
+        song[mainMenuSelect].audio.currentTime = 0;
         gameState = "start";
         mainMenuSelect = 0;
     } else if (keyPressed === "ArrowDown") {
-        songs[mainMenuSelect].audio.pause();
-        songs[mainMenuSelect].audio.currentTime = 0;
+        song[mainMenuSelect].audio.pause();
+        song[mainMenuSelect].audio.currentTime = 0;
         mainMenuSelect++;
         if (mainMenuSelect >= songList.length) {
             mainMenuSelect = 0;
         }
     } else if (keyPressed === "ArrowUp") {
-        songs[mainMenuSelect].audio.pause();
-        songs[mainMenuSelect].audio.currentTime = 0;
+        song[mainMenuSelect].audio.pause();
+        song[mainMenuSelect].audio.currentTime = 0;
         mainMenuSelect--;
         if (mainMenuSelect < 0) {
             mainMenuSelect = (songList.length - 1);

@@ -1,16 +1,20 @@
 class Song {
-    constructor(title, music, offset, bpm, notes) {
-        this.bpm = bpm;
-        this.crotchet = 60000 / bpm, // How long a beat is in ms
-        this.songoffset = offset, // Length of the beginning of the sound file (where metadata is stored) in ms
-        this.starttime;
-        this.songposition = currentTime - (this.starttime + this.songoffset); // Song position in ms
+    constructor(title, artist, charter, music, offset, bpm, difficulty, notes) {
+        this.title = title;
+        this.artist = artist;
+        this.charter = charter;
         this.audio = new Audio(`songs/${title}/${music}`);
         this.audio.volume = 0.4;
+        this.songoffset = offset, // Length of the beginning of the sound file (where metadata is stored) in ms
+        this.bpm = bpm;
+        this.crotchet = 60000 / bpm, // How long a beat is in ms
+        this.difficulty = difficulty;
         this.notes = notes;
+        this.starttime;
+        this.songposition = currentTime - (this.starttime + this.songoffset); // Song position in ms
     }
     startSong() {
-        currentSong = songs[mainMenuSelect]
+        currentSong = song[mainMenuSelect]
         lastbeat = 0;
         this.audio.pause();
         this.audio.currentTime = 0;
@@ -53,6 +57,9 @@ class Note {
             y = noteTime - song.songposition;
         }
     }
+    draw() {
+
+    }
 }
 
 class Hold {
@@ -66,16 +73,14 @@ let currentSong;
 let lastbeat;
 const tickSound = new Audio('snd/tick.mp3');
 tickSound.volume = 0.4;
+let notes = [];
 
 function createNotes() {
     let amountMeasures = currentSong.notes.length;
     for (let i = 0; i < amountMeasures; i++) {
         let snap = currentSong.notes[i].length;
         for (let j = 0; j < snap; j++) { 
-            if (currentSong.notes[i][j].charAt(0) == 1) {new Note("left", "normal", 0)}
-            else if (currentSong.notes[i][j].charAt(1) == 1) {new Note("down", "normal", 0)}
-            else if (currentSong.notes[i][j].charAt(2) == 1) {new Note("up", "normal", 0)}
-            else if (currentSong.notes[i][j].charAt(3) == 1) {new Note("right", "normal", 0)}
+            
         }
     }
 }

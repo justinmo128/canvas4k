@@ -3,18 +3,14 @@ window.addEventListener("keydown", (e) => {
     let keyPressed = e.key;
     if (controlSel) {
         controlsHandler(keyPressed);
-    } else if (gameState === "start" || gameState === "controls") {
+    } else if (gameState === "start") {
         mainMenuHandler(keyPressed);
+    } else if (gameState === "controls") {
+        controlMenuHandler(keyPressed);
     } else if (gameState === "songselect") {
         songSelectHandler(keyPressed);
-    } else if (gameState ===  "gameLoop" && keyPressed === "Escape") {
-        currentSong.endSong();
-    }
-        
-    for (let i = 0; i < 4; i++) {
-        if (keyPressed === controls[i]) {
-            held[i] = true;
-        }
+    } else if (gameState ===  "gameLoop") {
+        gameHandler(keyPressed)
     }
 })
 
@@ -73,6 +69,34 @@ function mainMenuHandler(keyPressed) {
     }
 }
 
+function controlMenuHandler(keyPressed) {
+    if (keyPressed === "ArrowDown") {
+        mainMenuSelect++;
+        if (mainMenuSelect === 5) {
+            mainMenuSelect = 0;
+        }
+    } else if (keyPressed === "ArrowUp") {
+        mainMenuSelect--;
+        if (mainMenuSelect === -1) {
+            mainMenuSelect = 4;
+        }
+    } else if (keyPressed === "Enter") {
+        if (mainMenuSelect === 4) {
+            gameState = "start";
+            mainMenuSelect = 1;
+            controlsNotEqual();
+        } else {
+            controlSel = true;
+        }
+    } else if (keyPressed === "Escape") {
+        if (!controlSel) {
+            gameState = "start";
+            mainMenuSelect = 1;
+            controlsNotEqual();
+        }
+    }
+}
+
 function controlsHandler(keyPressed) {
     if (keyPressed === "Escape") {
         setTimeout(() => {controlSel = false;}, 1);
@@ -103,6 +127,18 @@ function songSelectHandler(keyPressed) {
         mainMenuSelect--;
         if (mainMenuSelect < 0) {
             mainMenuSelect = (songList.length - 1);
+        }
+    }
+}
+
+function gameHandler(keyPressed) {
+    if (keyPressed === "Escape") {
+        currentSong.endSong();
+    }
+
+    for (let i = 0; i < 4; i++) {
+        if (keyPressed === controls[i]) {
+            held[i] = true;
         }
     }
 }

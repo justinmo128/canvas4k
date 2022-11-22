@@ -5,33 +5,34 @@ cnv.width = 640;
 cnv.height = 480;
 
 // Global Variables (unchanged)
-const judgments = {
+const judgements = {
     marvelous: 22,
-    perfect: 35,
+    superb: 45,
     great: 90,
-    good: 135,
-    bad: 180
+    uhh: 135,
+    bruh: 180
 };
 
 // Global Variables
 let controls = ["d", "f", "j", "k"];
 let held = [false, false, false, false];
-// let accuracy;
-// let combo;
-// let maxCombo;
-// let judgeCount = {
-//     marvelous: 0,
-//     perfect: 0,
-//     great: 0,
-//     good: 0,
-//     bad: 0,
-//     miss: 0,
-//     ok: 0,
-//     notgood: 0
-// }
+let keyUsed = [false, false, false, false];
+let accuracy = 0;
+let combo = 0;
+let maxCombo = 0;
+let judgeCount = {
+    marvelous: 0,
+    superb: 0,
+    great: 0,
+    uhh: 0,
+    bruh: 0,
+    miss: 0,
+    ok: 0,
+    notgood: 0
+}
 let currentTime;
 let lastFrameOccurence = performance.now();
-let gameState = "start";
+let gameState = "topMenu";
 let mainMenuSelect = 0;
 let controlSel = false;
 let downscroll = true;
@@ -39,7 +40,7 @@ let downscroll = true;
 // Draw Function
 window.addEventListener("load", draw);
 function draw() {
-    if (gameState === "start") {
+    if (gameState === "topMenu") {
         drawTopMenu();
     } else if (gameState === "controls") {
         drawControlsScreen();
@@ -63,6 +64,7 @@ function drawMainComponents() {
     ctx.fillStyle = "rgb(0,0,0)";
     ctx.fillRect(0, 0, cnv.width, cnv.height);
     // FPS
+    ctx.textAlign = "left"
     let fps = 1000 / (currentTime - lastFrameOccurence);
     fps = Math.round(fps);
     lastFrameOccurence = currentTime;

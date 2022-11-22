@@ -14,6 +14,19 @@ class Song {
         this.songposition = currentTime - (this.starttime + this.songoffset); // Song position in ms
     }
     startSong() {
+        accuracy = 0;
+        combo = 0;
+        maxCombo = 0;
+        judgeCount = {
+            marvelous: 0,
+            superb: 0,
+            great: 0,
+            uhh: 0,
+            bruh: 0,
+            miss: 0,
+            ok: 0,
+            notgood: 0
+        }
         currentSong = song[mainMenuSelect]
         lastbeat = 0;
         this.audio.pause();
@@ -56,20 +69,26 @@ class Note {
         } else {
             this.y = this.time - currentSong.songposition;
         }
+        if (currentSong.songposition >= this.time + 180 && !this.isHit) {
+            judgeCount.miss++;
+            this.isHit = true;
+        }
     }
     draw() {
-        if (this.dir == 0) {
-            ctx.fillStyle = "purple";
-            ctx.fillRect(204, this.y, 50, 50);
-        } else if (this.dir == 1) {
-            ctx.fillStyle = "cyan";
-            ctx.fillRect(264, this.y, 50, 50);
-        } else if (this.dir == 2) {
-            ctx.fillStyle = "lime";
-            ctx.fillRect(324, this.y, 50, 50);
-        } else if (this.dir == 3) {
-            ctx.fillStyle = "red";
-            ctx.fillRect(384, this.y, 50, 50);
+        if (this.isHit === false) {
+            if (this.dir == 0) {
+                ctx.fillStyle = "purple";
+                ctx.fillRect(204, this.y, 50, 50);
+            } else if (this.dir == 1) {
+                ctx.fillStyle = "cyan";
+                ctx.fillRect(264, this.y, 50, 50);
+            } else if (this.dir == 2) {
+                ctx.fillStyle = "lime";
+                ctx.fillRect(324, this.y, 50, 50);
+            } else if (this.dir == 3) {
+                ctx.fillStyle = "red";
+                ctx.fillRect(384, this.y, 50, 50);
+            }
         }
     }
 }

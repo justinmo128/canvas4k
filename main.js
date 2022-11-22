@@ -4,15 +4,6 @@ let ctx = cnv.getContext("2d");
 cnv.width = 640;
 cnv.height = 480;
 
-// Global Variables (unchanged)
-const judgements = {
-    marvelous: 22,
-    superb: 45,
-    great: 90,
-    uhh: 135,
-    bruh: 180
-};
-
 // Global Variables
 let controls = ["d", "f", "j", "k"];
 let held = [false, false, false, false];

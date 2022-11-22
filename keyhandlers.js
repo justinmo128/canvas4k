@@ -145,6 +145,7 @@ function judge(hitTime, key) {
                 hitTime >= notes[i].time - 180) {
                     judgeCount.bruh++;
             }
+            break;
         }
     }
 }

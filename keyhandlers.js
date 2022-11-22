@@ -126,6 +126,9 @@ function gameHandler(keyPressed) {
 
 function judge(hitTime, key) {
     for (let i = 0; i < notes.length; i++) {
+        if (hitTime < notes[i].time - 180) {
+            continue;
+        }
         if (notes[i].isHit === false && notes[i].dir === key && keyUsed[key] === false && hitTime <= notes[i].time + 180 && hitTime >= notes[i].time - 180) { // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
             keyUsed[key] = true;
             notes[i].isHit = true;

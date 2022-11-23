@@ -52,8 +52,9 @@ class Song {
         }
     }
     endSong() {
-        loadSongs();
+        gameState = "songselect"
         this.audio.currentTime = 0;
+        this.audio.pause();
     }
 }
 

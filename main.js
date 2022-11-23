@@ -27,7 +27,7 @@ let gameState = "topMenu";
 let mainMenuSelect = 0;
 let controlSel = false;
 let downscroll = true;
-let scrollSpeed = 1;
+let scrollSpeed = 100;
 
 // Draw Function
 window.addEventListener("load", draw);

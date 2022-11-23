@@ -23,7 +23,7 @@ function drawTopMenu() {
     ctx.fillText("Start", 35, 200);
     ctx.fillText("Controls", 35, 250);
     ctx.fillText(`Downscroll: ${downscroll}`, 35, 300);
-    ctx.fillText(`Scroll Speed: ${scrollSpeed}`, 35, 300);
+    ctx.fillText(`Scroll Speed: ${scrollSpeed}`, 35, 350);
 }
 
 function drawControlsScreen() {

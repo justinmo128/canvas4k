@@ -29,13 +29,13 @@ window.addEventListener("keyup", (e) => {
 function topMenuHandler(keyPressed) {
     if (keyPressed === "ArrowDown") {
         mainMenuSelect++;
-        if (mainMenuSelect === 3) {
+        if (mainMenuSelect === 4) {
             mainMenuSelect = 0;
         }
     } else if (keyPressed === "ArrowUp") {
         mainMenuSelect--;
         if (mainMenuSelect === -1) {
-            mainMenuSelect = 2;
+            mainMenuSelect = 3;
         }
     } else if (keyPressed === "Enter") {
         if (mainMenuSelect === 0) {
@@ -46,6 +46,10 @@ function topMenuHandler(keyPressed) {
         } else if (mainMenuSelect === 2) {
             downscroll = !downscroll;
         }
+    } else if (keyPressed === "ArrowRight" && mainMenuSelect === 3) {
+        scrollSpeed++;
+    } else if (keyPressed === "ArrowLeft" && mainMenuSelect === 3) {
+        scrollSpeed--;
     }
 }
 

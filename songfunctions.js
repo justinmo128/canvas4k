@@ -65,9 +65,9 @@ class Note {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
         if (downscroll) {
-            this.y = (400 - (noteTime - song.songposition)) * scrollSpeed; 
+            this.y = (400 - (this.time - currentSong.songposition)) * (scrollSpeed / 100); 
         } else {
-            this.y = (noteTime - song.songposition) * scrollSpeed;
+            this.y = (this.time - currentSong.songposition) * (scrollSpeed / 100);
         }
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {
             judgeCount.miss++;

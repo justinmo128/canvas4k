@@ -37,21 +37,21 @@ function drawJudgeCount() {
     ctx.textAlign = "left";
     ctx.font = "15px Roboto"
     ctx.fillStyle = "cyan";
-    ctx.fillText("MA", 120, 230);
+    ctx.fillText("MA", 100, 230);
     ctx.fillStyle = "yellow";
-    ctx.fillText("SB", 120, 250);
+    ctx.fillText("SB", 100, 250);
     ctx.fillStyle = "lime";
-    ctx.fillText("GR", 120, 270);
+    ctx.fillText("GR", 100, 270);
     ctx.fillStyle = "#1AB2FF";
-    ctx.fillText("UH", 120, 290);
+    ctx.fillText("UH", 100, 290);
     ctx.fillStyle = "magenta";
-    ctx.fillText("BR", 120, 310);
+    ctx.fillText("BR", 100, 310);
     ctx.fillStyle = "red";
-    ctx.fillText("MS", 120, 330);
+    ctx.fillText("MS", 100, 330);
     ctx.fillStyle = "yellow";
-    ctx.fillText("OK", 120, 350);
+    ctx.fillText("OK", 100, 350);
     ctx.fillStyle = "red";
-    ctx.fillText("NG", 120, 370);
+    ctx.fillText("NG", 100, 370);
     for (let i = 0; i < Object.values(judgeCount).length; i++) {
         ctx.textAlign = "right";
         ctx.font = "15px Roboto"

@@ -27,9 +27,9 @@ let gameState = "topMenu";
 let mainMenuSelect = 0;
 let controlSel = false;
 let downscroll = true;
-let scrollSpeed = 100;
-let visualOffset = -10;
-let audioOffset = 40;
+let scrollSpeed = 70;
+let visualOffset = -5;
+let audioOffset = 30;
 
 // Draw Function
 window.addEventListener("load", draw);

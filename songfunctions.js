@@ -11,7 +11,7 @@ class Song {
         this.difficulty = difficulty;
         this.notes = notes;
         this.starttime;
-        this.songposition = currentTime - (this.starttime + this.songoffset); // Song position in ms
+        this.songposition = 0; // Song position in ms
     }
     startSong() {
         accuracy = 0;
@@ -31,8 +31,8 @@ class Song {
         lastbeat = 0;
         this.audio.pause();
         this.audio.currentTime = 0;
+        this.starttime = performance.now() + this.crotchet * 4;
         setTimeout(() => {
-            this.starttime = performance.now();
             setTimeout(() => {
                 this.audio.play();
             },
@@ -44,8 +44,6 @@ class Song {
         this.songposition = (currentTime - (this.starttime + this.songoffset));
         if (this.songposition > lastbeat + this.crotchet) {
             lastbeat = lastbeat + this.crotchet;
-            console.log("Beat occurred!");
-            tickSound.play();
         }
         if (this.songposition > (this.audio.duration + 1) * 1000) {
             this.endSong();
@@ -73,6 +71,7 @@ class Note {
         } else {
             this.y = ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
         }
+        // Check if player missed the note
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {
             judgeCount.miss++;
             this.isHit = true;

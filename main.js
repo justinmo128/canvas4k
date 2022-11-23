@@ -27,7 +27,7 @@ let gameState = "topMenu";
 let mainMenuSelect = 0;
 let controlSel = false;
 let downscroll = true;
-let scrollSpeed = 70;
+let scrollSpeed = 85;
 let visualOffset = -5;
 let audioOffset = 30;
 

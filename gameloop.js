@@ -12,6 +12,7 @@ function loadingNotes() {
 function gameLoop() {
     // Logic
     currentSong.updateSong();
+    calcAccuracy();
     // Draw
     drawMainComponents();
     for (let i = 0; i < notes.length; i++) {
@@ -20,6 +21,29 @@ function gameLoop() {
     }
     drawReceptors();
     drawJudgeCount();
+    drawAccuracy();
+}
+
+function calcAccuracy() {
+    let totalNotesHit = 0;
+    for (let i = 0; i < Object.values(judgeCount).length - 2; i++) {
+        totalNotesHit += Object.values(judgeCount)[i];
+    };
+
+    // Assign each judgement an amount of points, then calculate the average amount of points
+    let avg = (judgeCount.marvelous * 2 + judgeCount.superb * 2 + judgeCount.great * 1 + judgeCount.uhh * 0 + judgeCount.bruh * -4 + judgeCount.miss * -8) / totalNotesHit; 
+
+    accuracy = Math.round(avg / 2 * 10000) / 100;
+    if (!accuracy) {
+        accuracy = 0;
+    }
+}
+
+function drawAccuracy() {
+    ctx.textAlign = "right";
+    ctx.font = "20px Roboto";
+    ctx.fillStyle = "white";
+    ctx.fillText(`${accuracy.toFixed(2)}%`, 200, 200);
 }
 
 function drawReceptors() {

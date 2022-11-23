@@ -2,6 +2,7 @@ const buttonhover = new Image(260, 40);
 buttonhover.src = 'img/buttonhover.png';
 
 function drawStart() {
+    ctx.textAlign = "left"
     ctx.fillStyle = "#007F96";
     ctx.fillRect(cnv.width - cnv.width / 2, 0, cnv.width / 2, cnv.height);
     ctx.fillStyle = "white";
@@ -41,6 +42,7 @@ function drawControlsScreen() {
         ctx.drawImage(buttonhover, 10, 369)
     }
     ctx.font = "30px Roboto";
+    ctx.textAlign = "left"
     // Left
     quickDrawRect("purple", 20, 40, false);
     ctx.fillStyle = "white";

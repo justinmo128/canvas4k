@@ -1,6 +1,5 @@
-let songData = [];
-let songs = [];
-let songList = ["GHOST", "Bopeebo", "Airborne Robots", "Blue Zenith", "Exit This Earth's Atomosphere", "Light It Up"];
+let song = [];
+let songList = ["GHOST", "Bopeebo", "Airborne Robots", "Blue Zenith", "Exit This Earth's Atomosphere", "Light It Up", "test"];
 
 function loadSongs() { // Called in keyhandlers.js
     gameState = "loading";
@@ -8,8 +7,7 @@ function loadSongs() { // Called in keyhandlers.js
         fetch(`songs/${songList[i]}/${songList[i]}.json`)
             .then((res) => res.json())
             .then((data) => {
-                songData[i] = data;
-                songs[i] = new Song(songData[i].title, songData[i].music, songData[i].offset, songData[i].bpm, songData[i].notes);
+                song[i] = new Song(data.title, data.artist, data.charter, data.music, data.offset, data.bpm, data.difficulty, data.notes);
                 if (i == songList.length - 1) {
                     gameState = "songselect";
                 }
@@ -30,7 +28,7 @@ function drawLoadingScreen() {
 }
 
 function drawSongSelectMenu() {
-    songs[mainMenuSelect].audio.play();
+    song[mainMenuSelect].audio.play();
     drawMainComponents();
     drawLeftSide();
     drawRightSide();
@@ -47,19 +45,19 @@ function drawLeftSide() {
     ctx.fillText("Song Select", 10, 30);
     // Song info and "press enter to begin"
     ctx.font = "50px Roboto";
-    ctx.fillText(songData[x].title, 10, 120);
+    ctx.fillText(song[x].title, 10, 120);
     ctx.font = "25px Roboto";
-    ctx.fillText(songData[x].artist, 10, 147);
+    ctx.fillText(song[x].artist, 10, 147);
     ctx.fillText("Press Enter to begin.", 10, 400);
     ctx.font = "15px Roboto";
-    ctx.fillText(`Charted by: ${songData[x].charter}`, 10, 470);
-    ctx.fillText(`${songData[x].bpm} BPM`, 10, 170);
-    ctx.fillText(`Length: ${Math.floor(songs[x].audio.duration / 60)}:${Math.round(songs[x].audio.duration % 60)}`, 10, 190);
+    ctx.fillText(`Charted by: ${song[x].charter}`, 10, 470);
+    ctx.fillText(`${song[x].bpm} BPM`, 10, 170);
+    ctx.fillText(`Length: ${Math.floor(song[x].audio.duration / 60)}:${Math.round(song[x].audio.duration % 60)}`, 10, 190);
     // Difficulty
     ctx.font = "20px Roboto";
     ctx.fillText(`Difficulty:`, 10, 250)
     ctx.font = "30px Roboto";
-    ctx.fillText(`${determineDifficulty(songData[x].difficulty)} ${songData[x].difficulty}`, 10, 280);
+    ctx.fillText(`${determineDifficulty(song[x].difficulty)} ${song[x].difficulty}`, 10, 280);
 }
 
 function drawRightSide() {
@@ -83,8 +81,8 @@ function drawRightSide() {
     ];
     let x = mainMenuSelect;
     for (let i = 0; i < 5; i++) {
-        slots[i].title = songData[(x + i) % songData.length].title;
-        slots[i].artist = songData[(x + i) % songData.length].artist;
+        slots[i].title = song[(x + i) % song.length].title;
+        slots[i].artist = song[(x + i) % song.length].artist;
     }
     ctx.font = "25px Roboto";
     for (let i = 0; i < slots.length; i++) {

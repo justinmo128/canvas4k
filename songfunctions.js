@@ -75,6 +75,7 @@ class Note {
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {
             judgeCount.miss++;
             lastJudgment = "MISS";
+            combo = 0;
             this.isHit = true;
         }
     }

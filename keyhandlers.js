@@ -152,25 +152,30 @@ function judge(hitTime, key) {
             keyUsed[key] = true;
             notes[i].isHit = true;
             if (hitTime <= notes[i].time + 22.5 &&
-                hitTime >= notes[i].time - 22.5) {
+            hitTime >= notes[i].time - 22.5) {
                     judgeCount.marvelous++;
                     lastJudgment = "MARVELOUS";
+                    combo++;
             } else if (hitTime <= notes[i].time + 45 &&
-                hitTime >= notes[i].time - 45) {
+              hitTime >= notes[i].time - 45) {
                     judgeCount.superb++;
                     lastJudgment = "SUPERB";
+                    combo++;
             } else if (hitTime <= notes[i].time + 90 &&
-                hitTime >= notes[i].time - 90) {
+              hitTime >= notes[i].time - 90) {
                     judgeCount.great++;
                     lastJudgment = "GREAT";
+                    combo++;
             } else if (hitTime <= notes[i].time + 135 &&
-                hitTime >= notes[i].time - 135) {
+              hitTime >= notes[i].time - 135) {
                     judgeCount.uhh++;
                     lastJudgment = "UHH";
+                    combo = 0;
             } else if (hitTime <= notes[i].time + 180 &&
-                hitTime >= notes[i].time - 180) {
+              hitTime >= notes[i].time - 180) {
                     judgeCount.bruh++;
                     lastJudgment = "BRUH";
+                    combo = 0;
             }
             break;
         }

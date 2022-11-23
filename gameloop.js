@@ -22,6 +22,7 @@ function gameLoop() {
     drawReceptors();
     drawJudgeCount();
     drawAccuracy();
+    drawCombo();
     drawJudgment();
 }
 
@@ -83,6 +84,16 @@ function drawJudgeCount() {
         ctx.fillStyle = "white";
         ctx.fillText(Object.values(judgeCount)[i], 170, 230 + i * 20);
     }
+}
+
+function drawCombo() {
+    if (combo > maxCombo) {
+        maxCombo = combo;
+    }
+    ctx.textAlign = "right";
+    ctx.font = "15px Roboto";
+    ctx.fillStyle = "white";
+    ctx.fillText(`${combo} COMBO`, 380, 240);
 }
 
 function drawJudgment() {

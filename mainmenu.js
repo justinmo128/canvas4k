@@ -18,12 +18,17 @@ function drawStart() {
 function drawTopMenu() {
     drawMainComponents();
     drawStart();
-    ctx.drawImage(buttonhover, 10, 169 + mainMenuSelect * 50);
+    ctx.drawImage(buttonhover, 10, 99 + mainMenuSelect * 50);
     ctx.font = "30px Roboto";
-    ctx.fillText("Start", 35, 200);
-    ctx.fillText("Controls", 35, 250);
-    ctx.fillText(`Downscroll: ${downscroll}`, 35, 300);
-    ctx.fillText(`Scroll Speed: ${scrollSpeed}`, 35, 350);
+    ctx.fillText("Start", 35, 130);
+    ctx.fillText("Controls", 35, 180);
+    ctx.fillText(`Downscroll: ${downscroll}`, 35, 230);
+    ctx.fillText(`Scroll Speed: ${scrollSpeed}`, 35, 280);
+    ctx.fillText(`Visual Offset: ${visualOffset}`, 35, 330);
+    ctx.fillText(`Audio Offset: ${audioOffset}`, 35, 380);
+    ctx.font = "22px Roboto";
+    ctx.fillText("Higher = Arrows appear later", 330, 330);
+    ctx.fillText("Higher = Audio starts later", 330, 380);
 }
 
 function drawControlsScreen() {

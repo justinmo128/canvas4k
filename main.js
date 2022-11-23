@@ -28,6 +28,8 @@ let mainMenuSelect = 0;
 let controlSel = false;
 let downscroll = true;
 let scrollSpeed = 100;
+let visualOffset = -10;
+let audioOffset = 40;
 
 // Draw Function
 window.addEventListener("load", draw);

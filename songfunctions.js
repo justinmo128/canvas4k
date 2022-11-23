@@ -32,8 +32,11 @@ class Song {
         this.audio.pause();
         this.audio.currentTime = 0;
         setTimeout(() => {
-            this.audio.play();
             this.starttime = performance.now();
+            setTimeout(() => {
+                this.audio.play();
+            },
+            audioOffset)     
         },
         this.crotchet * 4);
     }
@@ -65,9 +68,9 @@ class Note {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
         if (downscroll) {
-            this.y = (400 - (this.time - currentSong.songposition)) * (scrollSpeed / 100); 
+            this.y = 400 - ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset); 
         } else {
-            this.y = (this.time - currentSong.songposition) * (scrollSpeed / 100);
+            this.y = ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
         }
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {
             judgeCount.miss++;

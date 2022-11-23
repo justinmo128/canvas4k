@@ -29,13 +29,13 @@ window.addEventListener("keyup", (e) => {
 function topMenuHandler(keyPressed) {
     if (keyPressed === "ArrowDown") {
         mainMenuSelect++;
-        if (mainMenuSelect === 4) {
+        if (mainMenuSelect === 6) {
             mainMenuSelect = 0;
         }
     } else if (keyPressed === "ArrowUp") {
         mainMenuSelect--;
         if (mainMenuSelect === -1) {
-            mainMenuSelect = 3;
+            mainMenuSelect = 5;
         }
     } else if (keyPressed === "Enter") {
         if (mainMenuSelect === 0) {
@@ -46,10 +46,26 @@ function topMenuHandler(keyPressed) {
         } else if (mainMenuSelect === 2) {
             downscroll = !downscroll;
         }
-    } else if (keyPressed === "ArrowRight" && mainMenuSelect === 3) {
-        scrollSpeed++;
-    } else if (keyPressed === "ArrowLeft" && mainMenuSelect === 3) {
-        scrollSpeed--;
+    } else if (keyPressed === "ArrowRight") {
+        if (mainMenuSelect === 2) {
+            downscroll = !downscroll;
+        } else if (mainMenuSelect === 3) {
+            scrollSpeed++;
+        } else if (mainMenuSelect === 4) {
+            visualOffset++;
+        } else if (mainMenuSelect === 5) {
+            audioOffset++;
+        }
+    } else if (keyPressed === "ArrowLeft") {
+        if (mainMenuSelect === 2) {
+            downscroll = !downscroll;
+        } else if (mainMenuSelect === 3) {
+            scrollSpeed--;
+        } else if (mainMenuSelect === 4) {
+            visualOffset--;
+        } else if (mainMenuSelect === 5) {
+            audioOffset--;
+        }
     }
 }
 

@@ -74,6 +74,7 @@ class Note {
         // Check if player missed the note
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {
             judgeCount.miss++;
+            lastJudgment = "MISS";
             this.isHit = true;
         }
     }

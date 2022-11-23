@@ -22,6 +22,7 @@ function gameLoop() {
     drawReceptors();
     drawJudgeCount();
     drawAccuracy();
+    drawJudgment();
 }
 
 function calcAccuracy() {
@@ -82,6 +83,25 @@ function drawJudgeCount() {
         ctx.fillStyle = "white";
         ctx.fillText(Object.values(judgeCount)[i], 170, 230 + i * 20);
     }
+}
+
+function drawJudgment() {
+    ctx.textAlign = "center";
+    ctx.font = "25px Roboto";
+    if (lastJudgment === "MARVELOUS") {
+        ctx.fillStyle = "cyan";
+    } else if (lastJudgment === "SUPERB") {
+        ctx.fillStyle = "yellow";
+    } else if (lastJudgment === "GREAT") {
+        ctx.fillStyle = "lime";
+    } else if (lastJudgment === "UHH") {
+        ctx.fillStyle = "#1AB2FF";
+    } else if (lastJudgment === "BRUH") {
+        ctx.fillStyle = "magenta";
+    } else if (lastJudgment === "MISS") {
+        ctx.fillStyle = "red";
+    }
+    ctx.fillText(lastJudgment, 320, 270);
 }
 
 function quickDrawRect(colour, x, y, fill) {

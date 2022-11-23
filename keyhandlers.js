@@ -148,25 +148,29 @@ function judge(hitTime, key) {
     for (let i = 0; i < notes.length; i++) {
         if (hitTime < notes[i].time - 180) {
             continue;
-        }
-        if (notes[i].isHit === false && notes[i].dir === key && keyUsed[key] === false && hitTime <= notes[i].time + 180 && hitTime >= notes[i].time - 180) { // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
+        } else if (notes[i].isHit === false && notes[i].dir === key && keyUsed[key] === false && hitTime <= notes[i].time + 180 && hitTime >= notes[i].time - 180) { // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
             keyUsed[key] = true;
             notes[i].isHit = true;
             if (hitTime <= notes[i].time + 22.5 &&
                 hitTime >= notes[i].time - 22.5) {
                     judgeCount.marvelous++;
+                    lastJudgment = "MARVELOUS";
             } else if (hitTime <= notes[i].time + 45 &&
                 hitTime >= notes[i].time - 45) {
                     judgeCount.superb++;
+                    lastJudgment = "SUPERB";
             } else if (hitTime <= notes[i].time + 90 &&
                 hitTime >= notes[i].time - 90) {
                     judgeCount.great++;
+                    lastJudgment = "GREAT";
             } else if (hitTime <= notes[i].time + 135 &&
                 hitTime >= notes[i].time - 135) {
                     judgeCount.uhh++;
+                    lastJudgment = "UHH";
             } else if (hitTime <= notes[i].time + 180 &&
                 hitTime >= notes[i].time - 180) {
                     judgeCount.bruh++;
+                    lastJudgment = "BRUH";
             }
             break;
         }

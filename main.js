@@ -20,7 +20,8 @@ let judgeCount = {
     miss: 0,
     ok: 0,
     notgood: 0
-}
+};
+let lastJudgment = "";
 let currentTime;
 let lastFrameOccurence = performance.now();
 let gameState = "topMenu";

@@ -99,19 +99,23 @@ class Note {
 }
 
 class Hold {
-    constructor(dir, start) {
+    constructor(dir, start, end) {
         this.dir = dir; // 0 - left, 1 - down, 2 - up, 3 - right
         this.start = start;
+        this.end = end;
         this.isHit = false;
-        this.y;
+        this.startY;
+        this.endY;
     }
     update() {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
         if (downscroll) {
-            this.y = 400 - ((this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset); 
+            this.startY = 400 - ((this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset); 
+            this.endY = 400 - ((this.end - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
         } else {
-            this.y = ((this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
+            this.startY = ((this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
+            this.endY = ((this.end - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
         }
         // Check if player missed the note
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {
@@ -125,16 +129,24 @@ class Hold {
         if (this.isHit === false) {
             if (this.dir == 0) {
                 ctx.fillStyle = "purple";
-                ctx.fillRect(204, this.y, 50, 50);
+                ctx.fillRect(204, this.startY, 50, 50);
+                ctx.fillStyle = "gray";
+                ctx.fillRect(204, this.endY, 50, 50);
             } else if (this.dir == 1) {
                 ctx.fillStyle = "cyan";
-                ctx.fillRect(264, this.y, 50, 50);
+                ctx.fillRect(264, this.startY, 50, 50);
+                ctx.fillStyle = "gray";
+                ctx.fillRect(264, this.endY, 50, 50);
             } else if (this.dir == 2) {
                 ctx.fillStyle = "lime";
-                ctx.fillRect(324, this.y, 50, 50);
+                ctx.fillRect(324, this.startY, 50, 50);
+                ctx.fillStyle = "gray";
+                ctx.fillRect(324, this.endY, 50, 50);
             } else if (this.dir == 3) {
                 ctx.fillStyle = "red";
-                ctx.fillRect(384, this.y, 50, 50);
+                ctx.fillRect(384, this.startY, 50, 50);
+                ctx.fillStyle = "gray";
+                ctx.fillRect(384, this.endY, 50, 50);
             }
         }
     }
@@ -163,8 +175,17 @@ function createNotes() {
                     noteIndex++;
                 } else if (currentSong.notes[i][j].charAt(k) == 2) {
                     let start = (i + j / snap) * 4 * currentSong.crotchet;
-                    holds[holdIndex] = new Hold(k, start);
-                    holdIndex++;
+                    let end;
+                    for (let l = i; l < currentSong.notes.length; l++) {
+                        console.log(l)
+                        // console.log(currentSong.notes[l][j].charAt(k))
+                        if (currentSong.notes[l][j].charAt(k) == "3") {
+                            end = (l + j / snap) * 4 * currentSong.crotchet;
+                            holds[holdIndex] = new Hold(k, start, end);
+                            holdIndex++;
+                            break;
+                        }
+                    }
                 }
             }
         }

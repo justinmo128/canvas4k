@@ -145,10 +145,12 @@ function gameHandler(keyPressed) {
 }
 
 function judge(hitTime, key) {
+    // Loop for standard notes
     for (let i = 0; i < notes.length; i++) {
         if (hitTime < notes[i].time - 180) {
             continue;
-        } else if (notes[i].isHit === false && notes[i].dir === key && keyUsed[key] === false && hitTime <= notes[i].time + 180 && hitTime >= notes[i].time - 180) { // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
+        } else if (notes[i].isHit === false && notes[i].dir === key && keyUsed[key] === false && hitTime <= notes[i].time + 180 && hitTime >= notes[i].time - 180) { 
+        // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
             keyUsed[key] = true;
             notes[i].isHit = true;
             if (hitTime <= notes[i].time + 22.5 &&
@@ -173,6 +175,43 @@ function judge(hitTime, key) {
                     combo = 0;
             } else if (hitTime <= notes[i].time + 180 &&
               hitTime >= notes[i].time - 180) {
+                    judgeCount.bruh++;
+                    lastJudgment = "BRUH";
+                    combo = 0;
+            }
+            break;
+        }
+    }
+    // Loop for hold notes
+    for (let i = 0; i < holds.length; i++) {
+        if (hitTime < holds[i].start - 180) {
+            continue;
+        } else if (holds[i].isHit === false && holds[i].dir === key && keyUsed[key] === false && hitTime <= holds[i].start + 180 && hitTime >= holds[i].start - 180) { 
+        // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
+            keyUsed[key] = true;
+            holds[i].isHit = true;
+            if (hitTime <= holds[i].start + 22.5 &&
+            hitTime >= holds[i].start - 22.5) {
+                    judgeCount.marvelous++;
+                    lastJudgment = "MARVELOUS";
+                    combo++;
+            } else if (hitTime <= holds[i].start + 45 &&
+                hitTime >= holds[i].start - 45) {
+                    judgeCount.superb++;
+                    lastJudgment = "SUPERB";
+                    combo++;
+            } else if (hitTime <= holds[i].start + 90 &&
+                hitTime >= holds[i].start - 90) {
+                    judgeCount.great++;
+                    lastJudgment = "GREAT";
+                    combo++;
+            } else if (hitTime <= holds[i].start + 135 &&
+                hitTime >= holds[i].start - 135) {
+                    judgeCount.uhh++;
+                    lastJudgment = "UHH";
+                    combo = 0;
+            } else if (hitTime <= holds[i].start + 180 &&
+                hitTime >= holds[i].start - 180) {
                     judgeCount.bruh++;
                     lastJudgment = "BRUH";
                     combo = 0;

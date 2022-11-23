@@ -48,9 +48,9 @@ class Note {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
         if (downscroll) {
-            y = 400 - (noteTime - song.songposition); 
+            y = (400 - (noteTime - song.songposition)) * scrollSpeed; 
         } else {
-            y = noteTime - song.songposition;
+            y = (noteTime - song.songposition) * scrollSpeed;
         }
     }
 }

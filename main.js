@@ -35,6 +35,7 @@ let gameState = "start";
 let mainMenuSelect = 0;
 let controlSel = false;
 let downscroll = true;
+let scrollSpeed = 1;
 
 // Draw Function
 window.addEventListener("load", draw);

@@ -17,17 +17,12 @@ function drawStart() {
 function drawTopMenu() {
     drawMainComponents();
     drawStart();
-    if (mainMenuSelect === 0) {
-        ctx.drawImage(buttonhover, 10, 169)
-    } else if (mainMenuSelect === 1) {
-        ctx.drawImage(buttonhover, 10, 219)
-    } else if (mainMenuSelect === 2) {
-        ctx.drawImage(buttonhover, 10, 269)
-    }
+    ctx.drawImage(buttonhover, 10, 169 + mainMenuSelect * 50);
     ctx.font = "30px Roboto";
     ctx.fillText("Start", 35, 200);
     ctx.fillText("Controls", 35, 250);
     ctx.fillText(`Downscroll: ${downscroll}`, 35, 300);
+    ctx.fillText(`Scroll Speed: ${scrollSpeed}`, 35, 300);
 }
 
 function drawControlsScreen() {

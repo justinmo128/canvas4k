@@ -164,7 +164,6 @@ function createNotes() {
     gameState = "loadingNotes";
     let amountMeasures = currentSong.notes.length;
     let noteIndex = 0;
-    let holdIndex = 0;
     for (let i = 0; i < amountMeasures; i++) {
         let snap = currentSong.notes[i].length;
         for (let j = 0; j < snap; j++) { 
@@ -173,19 +172,6 @@ function createNotes() {
                     let noteTime = (i + j / snap) * 4 * currentSong.crotchet;
                     notes[noteIndex] = new Note(k, noteTime);
                     noteIndex++;
-                } else if (currentSong.notes[i][j].charAt(k) == 2) {
-                    let start = (i + j / snap) * 4 * currentSong.crotchet;
-                    let end;
-                    for (let l = i; l < currentSong.notes.length; l++) {
-                        console.log(l)
-                        // console.log(currentSong.notes[l][j].charAt(k))
-                        if (currentSong.notes[l][j].charAt(k) == "3") {
-                            end = (l + j / snap) * 4 * currentSong.crotchet;
-                            holds[holdIndex] = new Hold(k, start, end);
-                            holdIndex++;
-                            break;
-                        }
-                    }
                 }
             }
         }

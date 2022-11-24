@@ -19,10 +19,10 @@ function gameLoop() {
         notes[i].update();
         notes[i].draw();
     }
-    for (let i = 0; i < holds.length; i++) {
-        holds[i].update();
-        holds[i].draw();
-    }
+    // for (let i = 0; i < holds.length; i++) {
+    //     holds[i].update();
+    //     holds[i].draw();
+    // }
     drawReceptors();
     drawJudgeCount();
     drawAccuracy();

@@ -67,10 +67,9 @@ class Note {
     update() {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
+        this.y = ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
         if (downscroll) {
-            this.y = 400 - ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset); 
-        } else {
-            this.y = ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
+            this.y = 400 - this.y; 
         }
         // Check if player missed the note
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {
@@ -81,20 +80,51 @@ class Note {
         }
     }
     draw() {
-        if (this.isHit === false) {
+        if (!this.isHit) {
             if (this.dir == 0) {
                 ctx.fillStyle = "purple";
-                ctx.fillRect(204, this.y, 50, 50);
             } else if (this.dir == 1) {
                 ctx.fillStyle = "cyan";
-                ctx.fillRect(264, this.y, 50, 50);
             } else if (this.dir == 2) {
                 ctx.fillStyle = "lime";
-                ctx.fillRect(324, this.y, 50, 50);
             } else if (this.dir == 3) {
                 ctx.fillStyle = "red";
-                ctx.fillRect(384, this.y, 50, 50);
             }
+            ctx.fillRect(204 + this.dir * 60, this.y, 50, 50);
+        }
+    }
+    judge(hitTime, key) {
+        if (!this.isHit && this.dir === key && !keyUsed[key] && hitTime <= this.time + 180 && hitTime >= this.time - 180) { 
+        // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
+            keyUsed[key] = true;
+            this.isHit = true;
+            if (hitTime <= this.time + 90) {
+                combo++;
+                if (hitTime <= this.time + 22.5 &&
+                hitTime >= this.time - 22.5) {
+                    judgeCount.marvelous++;
+                    lastJudgment = "MARVELOUS";
+                } else if (hitTime <= this.time + 45 &&
+                hitTime >= this.time - 45) {
+                    judgeCount.superb++;
+                    lastJudgment = "SUPERB";
+                } else {
+                    judgeCount.great++;
+                    lastJudgment = "GREAT";
+                } 
+            } else {
+                combo = 0;
+                if (hitTime <= this.time + 135 &&
+                hitTime >= this.time - 135) {
+                    judgeCount.uhh++;
+                    lastJudgment = "UHH";
+                } else if (hitTime <= this.time + 180 &&
+                hitTime >= this.time - 180) {
+                    judgeCount.bruh++;
+                    lastJudgment = "BRUH";
+                }
+            }
+            return true;
         }
     }
 }
@@ -116,23 +146,16 @@ class Hold {
         findEnd:
         for (let i = startMeasure; i < amountMeasures; i++) {
             let snap = currentSong.notes[i].length;
-            if (i === startMeasure) {
-                for (let j = startSnap; j < snap; j++) { 
-                    if (currentSong.notes[i][j].charAt(this.dir) == 3) {
-                        this.end = (i + j / snap) * 4 * currentSong.crotchet;
-                        console.log(this.start, this.end, this.dir)
-                        break findEnd;
-                    }
-                }
-            } else {
+            if (i > startMeasure) {
+                startSnap = 0;
+            }
+            for (let j = startSnap; j < snap; j++) { 
                 if (currentSong.notes[i][j].charAt(this.dir) == 3) {
                     this.end = (i + j / snap) * 4 * currentSong.crotchet;
-                    console.log(this.start, this.end, this.dir)
                     break findEnd;
                 }
             }
         };
-        
     }
     update() {
         // Calculate y
@@ -159,33 +182,53 @@ class Hold {
         if (this.isHit === false) {
             if (this.dir == 0) {
                 ctx.fillStyle = "purple";
-                ctx.fillRect(204, this.startY, 50, 50);
             } else if (this.dir == 1) {
                 ctx.fillStyle = "cyan";
-                ctx.fillRect(264, this.startY, 50, 50);
             } else if (this.dir == 2) {
                 ctx.fillStyle = "lime";
-                ctx.fillRect(324, this.startY, 50, 50);
             } else if (this.dir == 3) {
                 ctx.fillStyle = "red";
-                ctx.fillRect(384, this.startY, 50, 50);
             }
+            ctx.fillRect(204 + this.dir * 60, this.startY, 50, 50);
         }
         // Draw end tails
         if (this.fullyHeld === false) {
-            if (this.dir == 0) {
-                ctx.fillStyle = "gray";
-                ctx.fillRect(209, this.endY, 40, this.tailLength);
-            } else if (this.dir == 1) {
-                ctx.fillStyle = "gray";
-                ctx.fillRect(269, this.endY, 40, this.tailLength);
-            } else if (this.dir == 2) {
-                ctx.fillStyle = "gray";
-                ctx.fillRect(329, this.endY, 40, this.tailLength);
-            } else if (this.dir == 3) {
-                ctx.fillStyle = "gray";
-                ctx.fillRect(389, this.endY, 40, this.tailLength);
+            ctx.fillStyle = "gray";
+            ctx.fillRect(209 + this.dir * 60, this.endY, 40, this.tailLength);
+        }
+    }
+    judge(hitTime, key) {
+        if (!this.isHit && this.dir === key && !keyUsed[key] && hitTime <= this.start + 180 && hitTime >= this.start - 180) { 
+        // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
+            keyUsed[key] = true;
+            this.isHit = true;
+            if (hitTime <= this.start + 90) {
+                combo++;
+                if (hitTime <= this.start + 22.5 &&
+                hitTime >= this.start - 22.5) {
+                    judgeCount.marvelous++;
+                    lastJudgment = "MARVELOUS";
+                } else if (hitTime <= this.start + 45 &&
+                hitTime >= this.start - 45) {
+                    judgeCount.superb++;
+                    lastJudgment = "SUPERB";
+                } else {
+                    judgeCount.great++;
+                    lastJudgment = "GREAT";
+                } 
+            } else {
+                combo = 0;
+                if (hitTime <= this.start + 135 &&
+                hitTime >= this.start - 135) {
+                    judgeCount.uhh++;
+                    lastJudgment = "UHH";
+                } else if (hitTime <= this.start + 180 &&
+                hitTime >= this.start - 180) {
+                    judgeCount.bruh++;
+                    lastJudgment = "BRUH";
+                }
             }
+            return true;
         }
     }
 }
@@ -199,10 +242,8 @@ let notes = [];
 let holds = [];
 
 function createNotes() {
-    gameState = "loadingNotes";
     createStandardNotes();
     createHolds();
-    gameState = "gameLoop";
 }
 
 function createStandardNotes() {
@@ -225,13 +266,12 @@ function createStandardNotes() {
 function createHolds() {
     let amountMeasures = currentSong.notes.length;
     let index = 0;
-    let start;
     for (let i = 0; i < amountMeasures; i++) {
         let snap = currentSong.notes[i].length;
         for (let j = 0; j < snap; j++) { 
             for (let k = 0; k < 4; k++) {
                 if (currentSong.notes[i][j].charAt(k) == 2) {
-                    start = (i + j / snap) * 4 * currentSong.crotchet;
+                    let start = (i + j / snap) * 4 * currentSong.crotchet;
                     holds[index] = new Hold(k, start, i, j);
                     index++;
                 }

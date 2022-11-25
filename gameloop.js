@@ -1,7 +1,9 @@
 function startGame() {
     song[mainMenuSelect].startSong();
     controlsNotEqual();
+    gameState = "loadingNotes";
     createNotes();
+    gameState = "gameLoop";
 }
 
 function loadingNotes() {

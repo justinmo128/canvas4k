@@ -2,8 +2,43 @@ function startGame() {
     song[mainMenuSelect].startSong();
     controlsNotEqual();
     gameState = "loadingNotes";
-    createNotes();
+    createStandardNotes();
+    createHolds();
     gameState = "gameLoop";
+}
+
+function createStandardNotes() {
+    let amountMeasures = currentSong.notes.length;
+    let index = 0;
+    for (let i = 0; i < amountMeasures; i++) {
+        let snap = currentSong.notes[i].length;
+        for (let j = 0; j < snap; j++) { 
+            for (let k = 0; k < 4; k++) {
+                if (currentSong.notes[i][j].charAt(k) == 1) {
+                    let noteTime = (i + j / snap) * 4 * currentSong.crotchet;
+                    notes[index] = new Note(k, noteTime);
+                    index++;
+                }
+            }
+        }
+    }
+}
+
+function createHolds() {
+    let amountMeasures = currentSong.notes.length;
+    let index = 0;
+    for (let i = 0; i < amountMeasures; i++) {
+        let snap = currentSong.notes[i].length;
+        for (let j = 0; j < snap; j++) { 
+            for (let k = 0; k < 4; k++) {
+                if (currentSong.notes[i][j].charAt(k) == 2) {
+                    let start = (i + j / snap) * 4 * currentSong.crotchet;
+                    holds[index] = new Hold(k, start, i, j);
+                    index++;
+                }
+            }
+        }
+    }
 }
 
 function loadingNotes() {

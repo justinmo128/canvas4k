@@ -18,11 +18,8 @@ window.addEventListener("keydown", (e) => {
 window.addEventListener("keyup", (e) => {
     let keyPressed = e.key;
 
-    for (let i = 0; i < 4; i++) {
-        if (keyPressed === controls[i]) {
-            held[i] = false;
-            keyUsed[i] = false;
-        }
+    if (gameState === "gameLoop") {
+        gameReleaseHandler(keyPressed);
     }
 })
 
@@ -149,6 +146,15 @@ function gameHandler(keyPressed) {
                     break;
                 }
             }
+        }
+    }
+}
+
+function gameReleaseHandler(keyPressed) {
+    for (let i = 0; i < 4; i++) {
+        if (keyPressed === controls[i]) {
+            held[i] = false;
+            keyUsed[i] = false;
         }
     }
 }

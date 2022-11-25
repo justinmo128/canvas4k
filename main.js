@@ -32,6 +32,14 @@ let scrollSpeed = 85;
 let visualOffset = -5;
 let audioOffset = 30;
 
+// Song Variables;
+let currentSong;
+let lastbeat;
+const tickSound = new Audio('snd/tick.mp3');
+tickSound.volume = 0.4;
+let notes = [];
+let holds = [];
+
 // Draw Function
 window.addEventListener("load", draw);
 function draw() {

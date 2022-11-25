@@ -70,6 +70,8 @@ class Note {
         this.y = ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
         if (downscroll) {
             this.y = 400 - this.y; 
+        } else {
+            this.y = this.y + 50;
         }
         // Check if player missed the note
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {
@@ -165,9 +167,9 @@ class Hold {
             this.endY = 400 - ((this.end - currentSong.songposition) * (scrollSpeed / 100) + visualOffset); 
             this.tailLength = this.startY - this.endY;
         } else {
-            this.startY = ((this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
-            this.endY = ((this.end - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
-            this.tailLength = this.startY - this.endY + 50;
+            this.startY = ((this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset) + 50;
+            this.endY = ((this.end - currentSong.songposition) * (scrollSpeed / 100) + visualOffset) + 50;
+            this.tailLength = this.startY - this.endY + 100;
         }
         // Check if player missed the note
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {

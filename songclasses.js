@@ -185,12 +185,10 @@ class Hold {
         }
         // Check if fully held (Holds do not count for combo or combo break, but do count for accuracy)
         if (this.isHolding && currentSong.songposition > this.end && !this.fullyHeld) {
-            console.log("Hi")
             this.fullyHeld = true;
             this.render = false;
             judgeCount.ok++;
         } else if (currentSong.songposition > this.end && !this.fullyHeld) {
-            console.log("Bruh")
             this.fullyHeld = true;
             judgeCount.notgood++;
         }
@@ -219,7 +217,7 @@ class Hold {
             }
         }
         // If it's currently being held, draw a black rectangle
-        if (this.isHolding && held[this.dir]) {
+        if (this.isHolding) {
             ctx.fillStyle = "black";
             if (downscroll) {
                 ctx.fillRect(204 + this.dir * 60, 450, 50, 50);

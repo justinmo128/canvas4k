@@ -155,6 +155,9 @@ function gameReleaseHandler(keyPressed) {
         if (keyPressed === controls[i]) {
             held[i] = false;
             keyUsed[i] = false;
+            for (let j = 0; j < holds.length; j++) {
+                holds[j].releaseHandler(i);
+            };
         }
     }
 }

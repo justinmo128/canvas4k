@@ -29,8 +29,8 @@ let mainMenuSelect = 0;
 let controlSel = false;
 let downscroll = true;
 let scrollSpeed = 85;
-let visualOffset = -5;
-let audioOffset = 30;
+let visualOffset = 0;
+let audioOffset = 25;
 
 // Song Variables;
 let currentSong;

@@ -71,7 +71,7 @@ class Note {
         if (downscroll) {
             this.y = 400 - this.y; 
         } else {
-            this.y = this.y + 50;
+            this.y = 30 + this.y;
         }
         // Check if player missed the note
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {
@@ -136,7 +136,9 @@ class Hold {
         this.dir = dir; // 0 - left, 1 - down, 2 - up, 3 - right
         this.start = start;
         this.isHit = false;
+        this.isHolding = false;
         this.fullyHeld = false;
+        this.render = true;
         this.startY;
         this.endY;
         this.tailLength;
@@ -154,6 +156,7 @@ class Hold {
             for (let j = startSnap; j < snap; j++) { 
                 if (currentSong.notes[i][j].charAt(this.dir) == 3) {
                     this.end = (i + j / snap) * 4 * currentSong.crotchet;
+                    this.length = this.end - this.start;
                     break findEnd;
                 }
             }
@@ -162,14 +165,16 @@ class Hold {
     update() {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
+        this.startY = (this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset;
+        this.endY = (this.end - currentSong.songposition) * (scrollSpeed / 100) + visualOffset;
         if (downscroll) {
-            this.startY = 400 - ((this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset); 
-            this.endY = 400 - ((this.end - currentSong.songposition) * (scrollSpeed / 100) + visualOffset); 
-            this.tailLength = this.startY - this.endY;
+            this.startY = 400 - this.startY; 
+            this.endY = 400 - this.endY;
+            this.tailLength = this.startY - this.endY - 50;
         } else {
-            this.startY = ((this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset) + 50;
-            this.endY = ((this.end - currentSong.songposition) * (scrollSpeed / 100) + visualOffset) + 50;
-            this.tailLength = this.startY - this.endY + 100;
+            this.startY = 30 + this.startY;
+            this.endY = 30 + this.endY;
+            this.tailLength = this.endY - this.startY - 50;
         }
         // Check if player missed the note
         if (currentSong.songposition >= this.time + 180 && !this.isHit) {
@@ -178,10 +183,19 @@ class Hold {
             combo = 0;
             this.isHit = true;
         }
+        // Check if fully held (Holds do not count for combo or combo break, but do count for accuracy)
+        if (this.isHolding && currentSong.songposition > this.end && !this.fullyHeld) {
+            this.fullyHeld = true;
+            this.render = false;
+            judgeCount.ok++;
+        } else if (currentSong.songposition > this.end && !this.fullyHeld) {
+            this.fullyHeld = true;
+            judgeCount.notgood++;
+        }
     }
     draw() {
         // Draw notes
-        if (this.isHit === false) {
+        if (!this.isHit) {
             if (this.dir == 0) {
                 ctx.fillStyle = "purple";
             } else if (this.dir == 1) {
@@ -194,9 +208,22 @@ class Hold {
             ctx.fillRect(204 + this.dir * 60, this.startY, 50, 50);
         }
         // Draw end tails
-        if (this.fullyHeld === false) {
+        if (this.render) {
             ctx.fillStyle = "gray";
-            ctx.fillRect(209 + this.dir * 60, this.endY, 40, this.tailLength);
+            if (downscroll) {
+                ctx.fillRect(209 + this.dir * 60, this.endY + 50, 40, this.tailLength);
+            } else {
+                ctx.fillRect(209 + this.dir * 60, this.startY + 50, 40, this.tailLength);
+            }
+        }
+        // If it's currently being held, draw a black rectangle
+        if (this.isHolding) {
+            ctx.fillStyle = "black";
+            if (downscroll) {
+                ctx.fillRect(204 + this.dir * 60, 450, 50, 50);
+            } else {
+                ctx.fillRect(204 + this.dir * 60, 0, 50, 50);
+            }
         }
     }
     judge(hitTime, key) {
@@ -205,6 +232,7 @@ class Hold {
         // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
             keyUsed[key] = true;
             this.isHit = true;
+            this.isHolding = true;
             if (hitTime <= this.start + 90) {
                 combo++;
                 if (hitTime <= this.start + 22.5 &&
@@ -233,5 +261,12 @@ class Hold {
             }
             return true;
         }
+    }
+    releaseHandler(key) {
+        setTimeout(() => {
+            if (!held[key] && key === this.dir) {
+                this.isHolding = false;
+            }
+        }, currentSong.crotchet * 2)
     }
 }

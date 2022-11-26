@@ -31,7 +31,7 @@ function createHolds() {
         let snap = currentSong.notes[i].length;
         for (let j = 0; j < snap; j++) { 
             for (let k = 0; k < 4; k++) {
-                if (currentSong.notes[i][j].charAt(k) == 2) {
+                if (currentSong.notes[i][j].charAt(k) == 2 || currentSong.notes[i][j].charAt(k) == 4) {
                     let start = (i + j / snap) * 4 * currentSong.crotchet;
                     holds[index] = new Hold(k, start, i, j);
                     index++;
@@ -69,12 +69,12 @@ function gameLoop() {
 
 function calcAccuracy() {
     let totalNotesHit = 0;
-    for (let i = 0; i < Object.values(judgeCount).length - 2; i++) {
+    for (let i = 0; i < Object.values(judgeCount).length; i++) {
         totalNotesHit += Object.values(judgeCount)[i];
     };
 
     // Assign each judgement an amount of points, then calculate the average amount of points
-    let avg = (judgeCount.marvelous * 2 + judgeCount.superb * 2 + judgeCount.great * 1 + judgeCount.uhh * 0 + judgeCount.bruh * -4 + judgeCount.miss * -8) / totalNotesHit; 
+    let avg = (judgeCount.marvelous * 2 + judgeCount.superb * 2 + judgeCount.great * 1 + judgeCount.uhh * 0 + judgeCount.bruh * -4 + judgeCount.miss * -8 + judgeCount.ok * 2 + judgeCount.notgood * -8) / totalNotesHit; 
 
     accuracy = Math.round(avg / 2 * 10000) / 100;
     if (!accuracy) {

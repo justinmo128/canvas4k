@@ -139,6 +139,7 @@ function gameHandler(keyPressed) {
             for (let j = 0; j < notes.length; j++) {
                 if (notes[j].judge(currentSong.songposition, i)) {
                     break;
+                    console.log("Broken")
                 }
             }
             for (let j = 0; j < holds.length; j++) {

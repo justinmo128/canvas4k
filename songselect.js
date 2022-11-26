@@ -1,5 +1,5 @@
 let song = [];
-let songList = ["GHOST", "Bopeebo", "Airborne Robots", "Blue Zenith", "Exit This Earth's Atomosphere", "Light It Up", "test"];
+let songList = ["GHOST", "Bopeebo", "Airborne Robots", "Blue Zenith", "Exit This Earth's Atomosphere", "Light It Up"];
 
 function loadSongs() { // Called in keyhandlers.js
     gameState = "loading";

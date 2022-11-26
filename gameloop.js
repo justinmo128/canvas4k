@@ -101,6 +101,10 @@ function drawReceptors() {
 }
 
 function drawJudgeCount() {
+    ctx.fillStyle = "#101010";
+    ctx.fillRect(96, 215, 80, 160);
+    ctx.fillStyle = "#200000";
+    ctx.fillRect(96, 275, 80, 60);
     ctx.textAlign = "left";
     ctx.font = "15px Roboto"
     ctx.fillStyle = "cyan";

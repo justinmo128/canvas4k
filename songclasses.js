@@ -277,6 +277,6 @@ class Hold {
             if (!held[key] && key === this.dir) {
                 this.isHolding = false;
             }
-        }, currentSong.crotchet / 4)
+        }, 250)
     }
 }

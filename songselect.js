@@ -10,7 +10,7 @@ function loadSongs() { // Called in keyhandlers.js
             .then((data) => {
                 song[i] = new Song(data.title, data.artist, data.charter, data.music, data.offset, data.bpm, data.difficulty, data.notes);
                 if (i == songList.length - 1) {
-                    gameState = "songselect";
+                    setTimeout(() => {gameState = "songselect"}, 100) // Prevents issues with trying to play song before it's loaded
                 }
             });
     }

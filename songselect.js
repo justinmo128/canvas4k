@@ -1,5 +1,5 @@
 let song = [];
-let songList = ["GHOST", "Bopeebo", "Airborne Robots", "Blue Zenith", "Exit This Earth's Atomosphere", "Light It Up", "Insight"];
+let songList = ["GHOST", "Bopeebo", "Airborne Robots", "Blue Zenith", "Exit This Earth's Atomosphere", "Light It Up", "Insight", "TremENDouS"];
 
 function loadSongs() { // Called in keyhandlers.js
     drawLoadingScreen(); // Just in case the text doesn't render

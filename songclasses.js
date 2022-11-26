@@ -207,17 +207,27 @@ class Hold {
             }
             ctx.fillRect(204 + this.dir * 60, this.startY, 50, 50);
         }
-        // Draw end tails
+        // Draw end tails and receptor "fill"
         if (this.render) {
             ctx.fillStyle = "gray";
             if (downscroll) {
                 ctx.fillRect(209 + this.dir * 60, this.endY + 50, 40, this.tailLength);
             } else {
                 ctx.fillRect(209 + this.dir * 60, this.startY + 50, 40, this.tailLength);
-            }
+            }      
         }
-        // If it's currently being held, draw a black rectangle
+        // If it's currently being held, draw a black rectangle and a note within the receptor
         if (this.isHolding) {
+            if (this.dir == 0) {
+                ctx.fillStyle = "purple";
+            } else if (this.dir == 1) {
+                ctx.fillStyle = "cyan";
+            } else if (this.dir == 2) {
+                ctx.fillStyle = "lime";
+            } else if (this.dir == 3) {
+                ctx.fillStyle = "red";
+            }
+            ctx.fillRect(204 + this.dir * 60, receptorY, 50, 50);
             ctx.fillStyle = "black";
             if (downscroll) {
                 ctx.fillRect(204 + this.dir * 60, 450, 50, 50);

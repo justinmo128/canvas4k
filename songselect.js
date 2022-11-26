@@ -2,6 +2,7 @@ let song = [];
 let songList = ["GHOST", "Bopeebo", "Airborne Robots", "Blue Zenith", "Exit This Earth's Atomosphere", "Light It Up"];
 
 function loadSongs() { // Called in keyhandlers.js
+    drawLoadingScreen(); // Just in case the text doesn't render
     gameState = "loading";
     for (let i = 0; i < songList.length; i++) {
         fetch(`songs/${songList[i]}/${songList[i]}.json`)
@@ -25,6 +26,8 @@ function drawLoadingScreen() {
     ctx.fillText("Song Select", 10, 30);
     ctx.font = "40px Roboto";
     ctx.fillText("Loading Songs...", 10, 120);
+    ctx.fillText("If this is taking a", 10, 170);
+    ctx.fillText("while, refresh!", 10, 220);
 }
 
 function drawSongSelectMenu() {

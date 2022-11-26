@@ -89,9 +89,11 @@ function drawAccuracy() {
     ctx.fillText(`${accuracy.toFixed(2)}%`, 200, 200);
 }
 
+let receptorY;
 function drawReceptors() {
-    let receptorY = 400;
-    if (!downscroll) {
+    if (downscroll) {
+        receptorY = 400;
+    } else {
         receptorY = 30;
     }
     quickDrawRect("purple", 204, receptorY, held[0]);

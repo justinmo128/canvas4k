@@ -183,12 +183,16 @@ class Hold {
             combo = 0;
             this.isHit = true;
         }
-        // Check if fully held (Holds do not count for combo or combo break, but do count for accuracy)
-        if (this.isHolding && currentSong.songposition > this.end && !this.fullyHeld) {
+        // Check if they held enough (Very lenient)
+        if (this.isHolding && currentSong.songposition > this.start + (this.end - this.start) * 0.8 && !this.fullyHeld) {
             this.fullyHeld = true;
-            this.render = false;
-            judgeCount.ok++;
-        } else if (currentSong.songposition > this.end && !this.fullyHeld) {
+            setTimeout(() => {
+                this.render = false;
+                judgeCount.ok++;
+            }, (this.end - this.start) * 0.2)
+        }
+        // Check if player missed the hold (Holds do not count for combo or combo break, but do count for accuracy)
+        else if (currentSong.songposition > this.end && !this.fullyHeld && !this.isHolding) {
             this.fullyHeld = true;
             judgeCount.notgood++;
         }
@@ -273,12 +277,5 @@ class Hold {
             }
             return true;
         }
-    }
-    releaseHandler(key) {
-        setTimeout(() => {
-            if (!held[key] && key === this.dir) {
-                this.isHolding = false;
-            }
-        }, 250)
     }
 }

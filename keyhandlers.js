@@ -133,17 +133,20 @@ function gameHandler(keyPressed) {
         currentSong.endSong();
     }
 
+    let noteIndex = 0;
+    let holdIndex = 0;
     for (let i = 0; i < 4; i++) {
         if (keyPressed === controls[i]) {
             held[i] = true;
-            for (let j = 0; j < notes.length; j++) {
+            for (let j = noteIndex; j < notes.length; j++) {
                 if (notes[j].judge(currentSong.songposition, i)) {
+                    noteIndex++;
                     break;
-                    console.log("Broken")
                 }
             }
-            for (let j = 0; j < holds.length; j++) {
+            for (let j = holdIndex; j < holds.length; j++) {
                 if (holds[j].judge(currentSong.songposition, i)) {
+                    holdIndex++;
                     break;
                 }
             }
@@ -157,8 +160,12 @@ function gameReleaseHandler(keyPressed) {
             held[i] = false;
             keyUsed[i] = false;
             for (let j = 0; j < holds.length; j++) {
-                holds[j].releaseHandler(i);
-            };
+                setTimeout(() => {
+                    if (held[i] === false && i === holds[j].dir) {
+                        holds[j].isHolding = false;
+                    }
+                }, 200)
+            }
         }
     }
 }

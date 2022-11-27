@@ -52,15 +52,15 @@ function gameLoop() {
     calcAccuracy();
     // Draw
     drawMainComponents();
-    for (let i = 0; i < notes.length; i++) {
-        notes[i].update();
-        notes[i].draw();
-    }
     for (let i = 0; i < holds.length; i++) {
         holds[i].update();
         holds[i].draw();
     }
     drawReceptors();
+    for (let i = 0; i < notes.length; i++) {
+        notes[i].update();
+        notes[i].draw();
+    }
     drawJudgeCount();
     drawAccuracy();
     drawCombo();
@@ -96,9 +96,13 @@ function drawReceptors() {
     } else {
         receptorY = 30;
     }
+    quickDrawRect("#400040", 204, receptorY, true);
     quickDrawRect("purple", 204, receptorY, held[0]);
+    quickDrawRect("#008080", 264, receptorY, true);
     quickDrawRect("cyan", 264, receptorY, held[1]);
+    quickDrawRect("#008000", 324, receptorY, true);
     quickDrawRect("lime", 324, receptorY, held[2]);
+    quickDrawRect("#800000", 384, receptorY, true);
     quickDrawRect("red", 384, receptorY, held[3]);
 }
 

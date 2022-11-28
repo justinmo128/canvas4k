@@ -58,6 +58,9 @@ function topMenuHandler(keyPressed) {
             downscroll = !downscroll;
         } else if (mainMenuSelect === 3) {
             scrollSpeed--;
+            if (scrollSpeed < 1) {
+                scrollSpeed = 1;
+            }
         } else if (mainMenuSelect === 4) {
             visualOffset--;
         } else if (mainMenuSelect === 5) {

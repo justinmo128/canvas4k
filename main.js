@@ -11,6 +11,7 @@ let keyUsed = [false, false, false, false];
 let accuracy = 0;
 let combo = 0;
 let maxCombo = 0;
+let life = 50;
 let judgeCount = {
     marvelous: 0,
     superb: 0,

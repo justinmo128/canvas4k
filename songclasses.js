@@ -14,6 +14,7 @@ class Song {
         this.songposition = 0; // Song position in ms
     }
     startSong() {
+        life = 50;
         accuracy = 0;
         combo = 0;
         maxCombo = 0;
@@ -78,6 +79,7 @@ class Note {
             judgeCount.miss++;
             lastJudgment = "MISS";
             combo = 0;
+            life -= 5;
             this.isHit = true;
         }
     }
@@ -106,13 +108,16 @@ class Note {
                 hitTime >= this.time - 22.5) {
                     judgeCount.marvelous++;
                     lastJudgment = "MARVELOUS";
+                    life += 3;
                 } else if (hitTime <= this.time + 45 &&
                 hitTime >= this.time - 45) {
                     judgeCount.superb++;
                     lastJudgment = "SUPERB";
+                    life += 2;
                 } else {
                     judgeCount.great++;
                     lastJudgment = "GREAT";
+                    life += 1;
                 } 
             } else {
                 combo = 0;
@@ -120,10 +125,12 @@ class Note {
                 hitTime >= this.time - 135) {
                     judgeCount.uhh++;
                     lastJudgment = "UHH";
+                    life -= 1;
                 } else if (hitTime <= this.time + 180 &&
                 hitTime >= this.time - 180) {
                     judgeCount.bruh++;
                     lastJudgment = "BRUH";
+                    life -= 3;
                 }
             }
             return true;
@@ -181,6 +188,7 @@ class Hold {
             judgeCount.miss++;
             lastJudgment = "MISS";
             combo = 0;
+            life -= 5;
             this.isHit = true;
         }
         // Check if they held enough (Very lenient)
@@ -255,13 +263,16 @@ class Hold {
                 hitTime >= this.start - 22.5) {
                     judgeCount.marvelous++;
                     lastJudgment = "MARVELOUS";
+                    life += 3;
                 } else if (hitTime <= this.start + 45 &&
                 hitTime >= this.start - 45) {
                     judgeCount.superb++;
                     lastJudgment = "SUPERB";
+                    life += 2;
                 } else {
                     judgeCount.great++;
                     lastJudgment = "GREAT";
+                    life += 1;
                 } 
             } else {
                 combo = 0;
@@ -269,10 +280,12 @@ class Hold {
                 hitTime >= this.start - 135) {
                     judgeCount.uhh++;
                     lastJudgment = "UHH";
+                    life -= 1;
                 } else if (hitTime <= this.start + 180 &&
                 hitTime >= this.start - 180) {
                     judgeCount.bruh++;
                     lastJudgment = "BRUH";
+                    life -= 3;
                 }
             }
             return true;

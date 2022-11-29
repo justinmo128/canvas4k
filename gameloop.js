@@ -114,6 +114,9 @@ function drawAccuracy() {
 }
 
 let receptorY;
+const receptorImg = new Image();
+receptorImg.src = 'img/receptor-down.png';
+
 function drawReceptors() {
     if (downscroll) {
         receptorY = 400;
@@ -128,6 +131,16 @@ function drawReceptors() {
     quickDrawRect("lime", 324, receptorY, held[2]);
     quickDrawRect("#800000", 384, receptorY, true);
     quickDrawRect("red", 384, receptorY, held[3]);
+    // if (downscroll) {
+    //     receptorY = 393;
+    // } else {
+    //     receptorY = 37;
+    // }
+    // for (let i = 0; i < 4; i++) {
+    //     ctx.save();
+    //     ctx.drawImage(receptorImg, 197 + i * 60, receptorY, 64, 64);
+    //     ctx.restore();
+    // }
 }
 
 function drawSongProgress() {

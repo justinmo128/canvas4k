@@ -100,6 +100,7 @@ class Note {
     judge(hitTime, key) {
         if (!this.isHit && this.dir === key && !keyUsed[key] && hitTime <= this.time + 180 && hitTime >= this.time - 180) { 
         // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
+            error = hitTime - this.time;
             keyUsed[key] = true;
             this.isHit = true;
             if (hitTime <= this.time + 90) {

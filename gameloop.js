@@ -195,6 +195,9 @@ function drawJudgment() {
         ctx.fillStyle = "red";
     }
     ctx.fillText(lastJudgment, 320, 270);
+    ctx.font = "10px Roboto";
+    ctx.textAlign = "right";
+    ctx.fillText(`${error.toFixed(2)}ms`, 400, 280)
 }
 
 function quickDrawRect(colour, x, y, fill) {

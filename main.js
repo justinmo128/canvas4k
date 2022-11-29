@@ -23,6 +23,7 @@ let judgeCount = {
     notgood: 0
 };
 let lastJudgment = "";
+let error = 0;
 let currentTime;
 let lastFrameOccurence = performance.now();
 let gameState = "topMenu";

@@ -68,7 +68,7 @@ class Note {
     update() {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
-        this.y = ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
+        this.y = (this.time - currentSong.songposition + visualOffset) * (scrollSpeed / 100);
         if (downscroll) {
             this.y = 400 - this.y; 
         } else {
@@ -173,8 +173,8 @@ class Hold {
     update() {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
-        this.startY = (this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset;
-        this.endY = (this.end - currentSong.songposition) * (scrollSpeed / 100) + visualOffset;
+        this.startY = (this.start - currentSong.songposition+ visualOffset) * (scrollSpeed / 100);
+        this.endY = (this.end - currentSong.songposition + visualOffset) * (scrollSpeed / 100);
         if (downscroll) {
             this.startY = 400 - this.startY; 
             this.endY = 400 - this.endY;
@@ -221,7 +221,7 @@ class Hold {
             ctx.fillRect(204 + this.dir * 60, this.startY, 50, 50);
         }
         // Draw end tails
-        if (this.render && this.endY <= 640 && this.endY >= this.tailLength * -1) {
+        if (this.render && this.endY <= 640 && this.endY >= (this.tailLength + 50) * -1) {
             ctx.fillStyle = "gray";
             if (downscroll) {
                 ctx.fillRect(209 + this.dir * 60, this.endY + 50, 40, this.tailLength);
@@ -306,7 +306,7 @@ class Mine {
     update() {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
-        this.y = ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
+        this.y = (this.time - currentSong.songposition + visualOffset) * (scrollSpeed / 100);
         if (downscroll) {
             this.y = 400 - this.y; 
         } else {

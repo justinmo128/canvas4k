@@ -41,6 +41,7 @@ const tickSound = new Audio('snd/tick.mp3');
 tickSound.volume = 0.4;
 let notes = [];
 let holds = [];
+let mines = [];
 
 // Draw Function
 window.addEventListener("load", draw);

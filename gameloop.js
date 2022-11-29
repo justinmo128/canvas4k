@@ -4,6 +4,7 @@ function startGame() {
     gameState = "loadingNotes";
     createStandardNotes();
     createHolds();
+    createMines();
     gameState = "gameLoop";
 }
 
@@ -41,6 +42,23 @@ function createHolds() {
     }
 }
 
+function createMines() {
+    let amountMeasures = currentSong.notes.length;
+    let index = 0;
+    for (let i = 0; i < amountMeasures; i++) {
+        let snap = currentSong.notes[i].length;
+        for (let j = 0; j < snap; j++) { 
+            for (let k = 0; k < 4; k++) {
+                if (currentSong.notes[i][j].charAt(k) == "M") {
+                    let time = (i + j / snap) * 4 * currentSong.crotchet;
+                    mines[index] = new Mine(k, time);
+                    index++;
+                }
+            }
+        }
+    }
+}
+
 function loadingNotes() {
     drawMainComponents();
     drawReceptors();
@@ -60,6 +78,10 @@ function gameLoop() {
     for (let i = 0; i < notes.length; i++) {
         notes[i].update();
         notes[i].draw();
+    }
+    for (let i = 0; i < mines.length; i++) {
+        mines[i].update();
+        mines[i].draw();
     }
     drawSongProgress();
     drawLife();

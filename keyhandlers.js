@@ -138,6 +138,7 @@ function gameHandler(keyPressed) {
 
     let noteIndex = 0;
     let holdIndex = 0;
+    let mineIndex = 0;
     for (let i = 0; i < 4; i++) {
         if (keyPressed === controls[i]) {
             held[i] = true;
@@ -150,6 +151,12 @@ function gameHandler(keyPressed) {
             for (let j = holdIndex; j < holds.length; j++) {
                 if (holds[j].judge(currentSong.songposition, i)) {
                     holdIndex++;
+                    break;
+                }
+            }
+            for (let j = mineIndex; j < mines.length; j++) {
+                if (mines[j].judge(currentSong.songposition, i)) {
+                    mineIndex++;
                     break;
                 }
             }

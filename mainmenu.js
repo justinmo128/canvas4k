@@ -34,9 +34,9 @@ function drawTopMenu() {
     ctx.fillText(`Audio Offset: ${audioOffset}`, 160, 380);
     ctx.textAlign = "left";
     ctx.font = "22px Roboto";
-    ctx.fillText("Higher = Arrows appear later", 330, 330);
-    ctx.fillText("Higher = Audio starts later", 330, 365);
-    ctx.fillText("Both offsets in milliseconds", 330, 400);
+    ctx.fillText("+ is later", 330, 315);
+    ctx.fillText("- is earlier", 330, 350);
+    ctx.fillText("Both offsets in milliseconds", 330, 385);
 }
 
 function drawControlsScreen() {

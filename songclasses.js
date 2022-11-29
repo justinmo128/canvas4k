@@ -293,3 +293,37 @@ class Hold {
         }
     }
 }
+
+const mineImg = new Image(50, 50);
+mineImg.src = 'img/mine.png';
+class Mine {
+    constructor(dir, time) {
+        this.dir = dir; // 0 - left, 1 - down, 2 - up, 3 - right
+        this.time = time;
+        this.isHit = false;
+        this.y;
+    }
+    update() {
+        // Calculate y
+        // noteTime - song.songposition is the distance from the receptor
+        this.y = ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
+        if (downscroll) {
+            this.y = 400 - this.y; 
+        } else {
+            this.y = 30 + this.y;
+        }
+    }
+    draw() {
+        if (!this.isHit) {
+            ctx.drawImage(mineImg, 204 + this.dir * 60, this.y, 50, 50);
+        }
+    }
+    judge(hitTime, key) {
+        if (!this.isHit && this.dir === key && hitTime <= this.time + 90 && hitTime >= this.time - 90) {
+            life -= 5;
+            keyUsed[key] = true;
+            this.isHit = true;
+            return true;
+        }
+    }
+}

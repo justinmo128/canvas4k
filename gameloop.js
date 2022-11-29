@@ -75,11 +75,11 @@ function gameLoop() {
         holds[i].draw();
     }
     drawReceptors();
-    for (let i = 0; i < notes.length; i++) {
+    for (let i = noteIndex; i < notes.length; i++) {
         notes[i].update();
         notes[i].draw();
     }
-    for (let i = 0; i < mines.length; i++) {
+    for (let i = mineIndex; i < mines.length; i++) {
         mines[i].update();
         mines[i].draw();
     }

@@ -84,7 +84,7 @@ class Note {
         }
     }
     draw() {
-        if (!this.isHit) {
+        if (!this.isHit && this.y <= 640 && this.y >= -50) {
             if (this.dir == 0) {
                 ctx.fillStyle = "purple";
             } else if (this.dir == 1) {
@@ -208,7 +208,7 @@ class Hold {
     }
     draw() {
         // Draw notes
-        if (!this.isHit) {
+        if (!this.isHit && this.startY <= 640 && this.startY >= -50) {
             if (this.dir == 0) {
                 ctx.fillStyle = "purple";
             } else if (this.dir == 1) {
@@ -221,7 +221,7 @@ class Hold {
             ctx.fillRect(204 + this.dir * 60, this.startY, 50, 50);
         }
         // Draw end tails
-        if (this.render) {
+        if (this.render && this.endY <= 640 && this.endY >= this.tailLength * -1) {
             ctx.fillStyle = "gray";
             if (downscroll) {
                 ctx.fillRect(209 + this.dir * 60, this.endY + 50, 40, this.tailLength);
@@ -314,7 +314,7 @@ class Mine {
         }
     }
     draw() {
-        if (!this.isHit) {
+        if (!this.isHit && this.y <= 640 && this.y >= -50) {
             ctx.drawImage(mineImg, 204 + this.dir * 60, this.y, 50, 50);
         }
     }

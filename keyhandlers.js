@@ -135,10 +135,6 @@ function gameHandler(keyPressed) {
     if (keyPressed === "Escape") {
         currentSong.endSong();
     }
-
-    let noteIndex = 0;
-    let holdIndex = 0;
-    let mineIndex = 0;
     for (let i = 0; i < 4; i++) {
         if (keyPressed === controls[i]) {
             held[i] = true;

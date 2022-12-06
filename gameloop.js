@@ -79,9 +79,9 @@ function gameLoop() {
         i.update();
         i.draw();
     }
-    for (let i = mineIndex; i < mines.length; i++) {
-        mines[i].update();
-        mines[i].draw();
+    for (let i of mines) {
+        i.update();
+        i.draw();
     }
     drawSongProgress();
     drawLife();

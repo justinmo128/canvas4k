@@ -138,21 +138,20 @@ function gameHandler(keyPressed) {
     for (let i = 0; i < 4; i++) {
         if (keyPressed === controls[i]) {
             held[i] = true;
-            for (let j = noteIndex; j < notes.length; j++) {
+            for (let j = 0; j < notes.length; j++) {
                 if (notes[j].judge(currentSong.songposition, i)) {
-                    noteIndex++;
+                    notes.shift();
                     break;
                 }
             }
-            for (let j = holdIndex; j < holds.length; j++) {
+            for (let j = 0; j < holds.length; j++) {
                 if (holds[j].judge(currentSong.songposition, i)) {
-                    holdIndex++;
                     break;
                 }
             }
-            for (let j = mineIndex; j < mines.length; j++) {
+            for (let j = 0; j < mines.length; j++) {
                 if (mines[j].judge(currentSong.songposition, i)) {
-                    mineIndex++;
+                    mines.shift();
                     break;
                 }
             }

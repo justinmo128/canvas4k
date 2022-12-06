@@ -58,6 +58,9 @@ function topMenuHandler(keyPressed) {
             downscroll = !downscroll;
         } else if (mainMenuSelect === 3) {
             scrollSpeed--;
+            if (scrollSpeed < 1) {
+                scrollSpeed = 1;
+            }
         } else if (mainMenuSelect === 4) {
             visualOffset--;
         } else if (mainMenuSelect === 5) {
@@ -132,9 +135,6 @@ function gameHandler(keyPressed) {
     if (keyPressed === "Escape") {
         currentSong.endSong();
     }
-
-    let noteIndex = 0;
-    let holdIndex = 0;
     for (let i = 0; i < 4; i++) {
         if (keyPressed === controls[i]) {
             held[i] = true;
@@ -147,6 +147,12 @@ function gameHandler(keyPressed) {
             for (let j = holdIndex; j < holds.length; j++) {
                 if (holds[j].judge(currentSong.songposition, i)) {
                     holdIndex++;
+                    break;
+                }
+            }
+            for (let j = mineIndex; j < mines.length; j++) {
+                if (mines[j].judge(currentSong.songposition, i)) {
+                    mineIndex++;
                     break;
                 }
             }

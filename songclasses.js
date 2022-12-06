@@ -14,6 +14,7 @@ class Song {
         this.songposition = 0; // Song position in ms
     }
     startSong() {
+        life = 50;
         accuracy = 0;
         combo = 0;
         maxCombo = 0;
@@ -67,7 +68,7 @@ class Note {
     update() {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
-        this.y = ((this.time - currentSong.songposition) * (scrollSpeed / 100) + visualOffset);
+        this.y = (this.time - currentSong.songposition + visualOffset) * (scrollSpeed / 100);
         if (downscroll) {
             this.y = 400 - this.y; 
         } else {
@@ -78,11 +79,12 @@ class Note {
             judgeCount.miss++;
             lastJudgment = "MISS";
             combo = 0;
+            life -= 5;
             this.isHit = true;
         }
     }
     draw() {
-        if (!this.isHit) {
+        if (!this.isHit && this.y <= 640 && this.y >= -50) {
             if (this.dir == 0) {
                 ctx.fillStyle = "purple";
             } else if (this.dir == 1) {
@@ -98,6 +100,7 @@ class Note {
     judge(hitTime, key) {
         if (!this.isHit && this.dir === key && !keyUsed[key] && hitTime <= this.time + 180 && hitTime >= this.time - 180) { 
         // Has the note already been hit? Does the note match the key pressed? Is the hit time within the notes leniency?
+            error = hitTime - this.time;
             keyUsed[key] = true;
             this.isHit = true;
             if (hitTime <= this.time + 90) {
@@ -106,13 +109,16 @@ class Note {
                 hitTime >= this.time - 22.5) {
                     judgeCount.marvelous++;
                     lastJudgment = "MARVELOUS";
+                    life += 3;
                 } else if (hitTime <= this.time + 45 &&
                 hitTime >= this.time - 45) {
                     judgeCount.superb++;
                     lastJudgment = "SUPERB";
+                    life += 2;
                 } else {
                     judgeCount.great++;
                     lastJudgment = "GREAT";
+                    life += 1;
                 } 
             } else {
                 combo = 0;
@@ -120,10 +126,12 @@ class Note {
                 hitTime >= this.time - 135) {
                     judgeCount.uhh++;
                     lastJudgment = "UHH";
+                    life -= 1;
                 } else if (hitTime <= this.time + 180 &&
                 hitTime >= this.time - 180) {
                     judgeCount.bruh++;
                     lastJudgment = "BRUH";
+                    life -= 3;
                 }
             }
             return true;
@@ -165,8 +173,8 @@ class Hold {
     update() {
         // Calculate y
         // noteTime - song.songposition is the distance from the receptor
-        this.startY = (this.start - currentSong.songposition) * (scrollSpeed / 100) + visualOffset;
-        this.endY = (this.end - currentSong.songposition) * (scrollSpeed / 100) + visualOffset;
+        this.startY = (this.start - currentSong.songposition+ visualOffset) * (scrollSpeed / 100);
+        this.endY = (this.end - currentSong.songposition + visualOffset) * (scrollSpeed / 100);
         if (downscroll) {
             this.startY = 400 - this.startY; 
             this.endY = 400 - this.endY;
@@ -181,6 +189,7 @@ class Hold {
             judgeCount.miss++;
             lastJudgment = "MISS";
             combo = 0;
+            life -= 5;
             this.isHit = true;
         }
         // Check if they held enough (Very lenient)
@@ -199,7 +208,7 @@ class Hold {
     }
     draw() {
         // Draw notes
-        if (!this.isHit) {
+        if (!this.isHit && this.startY <= 640 && this.startY >= -50) {
             if (this.dir == 0) {
                 ctx.fillStyle = "purple";
             } else if (this.dir == 1) {
@@ -212,7 +221,7 @@ class Hold {
             ctx.fillRect(204 + this.dir * 60, this.startY, 50, 50);
         }
         // Draw end tails
-        if (this.render) {
+        if (this.render && this.endY <= 640 && this.endY >= (this.tailLength + 50) * -1) {
             ctx.fillStyle = "gray";
             if (downscroll) {
                 ctx.fillRect(209 + this.dir * 60, this.endY + 50, 40, this.tailLength);
@@ -255,13 +264,16 @@ class Hold {
                 hitTime >= this.start - 22.5) {
                     judgeCount.marvelous++;
                     lastJudgment = "MARVELOUS";
+                    life += 3;
                 } else if (hitTime <= this.start + 45 &&
                 hitTime >= this.start - 45) {
                     judgeCount.superb++;
                     lastJudgment = "SUPERB";
+                    life += 2;
                 } else {
                     judgeCount.great++;
                     lastJudgment = "GREAT";
+                    life += 1;
                 } 
             } else {
                 combo = 0;
@@ -269,12 +281,48 @@ class Hold {
                 hitTime >= this.start - 135) {
                     judgeCount.uhh++;
                     lastJudgment = "UHH";
+                    life -= 1;
                 } else if (hitTime <= this.start + 180 &&
                 hitTime >= this.start - 180) {
                     judgeCount.bruh++;
                     lastJudgment = "BRUH";
+                    life -= 3;
                 }
             }
+            return true;
+        }
+    }
+}
+
+const mineImg = new Image(50, 50);
+mineImg.src = 'img/mine.png';
+class Mine {
+    constructor(dir, time) {
+        this.dir = dir; // 0 - left, 1 - down, 2 - up, 3 - right
+        this.time = time;
+        this.isHit = false;
+        this.y;
+    }
+    update() {
+        // Calculate y
+        // noteTime - song.songposition is the distance from the receptor
+        this.y = (this.time - currentSong.songposition + visualOffset) * (scrollSpeed / 100);
+        if (downscroll) {
+            this.y = 400 - this.y; 
+        } else {
+            this.y = 30 + this.y;
+        }
+    }
+    draw() {
+        if (!this.isHit && this.y <= 640 && this.y >= -50) {
+            ctx.drawImage(mineImg, 204 + this.dir * 60, this.y, 50, 50);
+        }
+    }
+    judge(hitTime, key) {
+        if (!this.isHit && this.dir === key && hitTime <= this.time + 90 && hitTime >= this.time - 90) {
+            life -= 5;
+            keyUsed[key] = true;
+            this.isHit = true;
             return true;
         }
     }

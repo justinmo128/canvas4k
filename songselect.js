@@ -69,28 +69,27 @@ function drawRightSide() {
     ctx.fillRect(cnv.width / 2, 0, cnv.width / 2, cnv.height);
     ctx.fillStyle = "gray";
     ctx.fillRect(cnv.width / 2, 0, cnv.width / 2, 96);
-    // Lines
-    ctx.fillStyle = "white";
-    for (let i = 1; i < 5; i++) {
-        ctx.fillRect(cnv.width / 2, i * 96 - 1, cnv.width / 2, 2);
-    }
     // Text
     let slots = [
-        {title: "title", artist: "artist", y: 41}, // Top (1st slot)
-        {title: "title", artist: "artist", y: 137},
-        {title: "title", artist: "artist", y: 233}, // Center (3rd slot)
-        {title: "title", artist: "artist", y: 329},
-        {title: "title", artist: "artist", y: 425}, // Bottom (5th slot)
+        {title: "title", artist: "artist", diff: 0, y: 41}, // Top (1st slot)
+        {title: "title", artist: "artist", diff: 0, y: 137},
+        {title: "title", artist: "artist", diff: 0, y: 233}, // Center (3rd slot)
+        {title: "title", artist: "artist", diff: 0, y: 329},
+        {title: "title", artist: "artist", diff: 0, y: 425}, // Bottom (5th slot)
     ];
     let x = mainMenuSelect;
     for (let i = 0; i < 5; i++) {
         slots[i].title = song[(x + i) % song.length].title;
         slots[i].artist = song[(x + i) % song.length].artist;
+        slots[i].diff = song[(x + i) % song.length].difficulty;
     }
     ctx.font = "25px Roboto";
     for (let i = 0; i < slots.length; i++) {
+        ctx.fillStyle = "white";
         ctx.fillText(slots[i].title, 330, slots[i].y);
         ctx.fillText(slots[i].artist, 330, slots[i].y + 30);
+        determineDifficulty(slots[i].diff);
+        ctx.fillRect(630, i * 96, 10, 96)
     }
 }
 

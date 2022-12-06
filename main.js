@@ -11,6 +11,7 @@ let keyUsed = [false, false, false, false];
 let accuracy = 0;
 let combo = 0;
 let maxCombo = 0;
+let life = 50;
 let judgeCount = {
     marvelous: 0,
     superb: 0,
@@ -22,6 +23,7 @@ let judgeCount = {
     notgood: 0
 };
 let lastJudgment = "";
+let error = 0;
 let currentTime;
 let lastFrameOccurence = performance.now();
 let gameState = "topMenu";
@@ -31,6 +33,9 @@ let downscroll = true;
 let scrollSpeed = 85;
 let visualOffset = 0;
 let audioOffset = 25;
+let noteIndex = 0;
+let holdIndex = 0;
+let mineIndex = 0;
 
 // Song Variables;
 let currentSong;
@@ -39,6 +44,7 @@ const tickSound = new Audio('snd/tick.mp3');
 tickSound.volume = 0.4;
 let notes = [];
 let holds = [];
+let mines = [];
 
 // Draw Function
 window.addEventListener("load", draw);

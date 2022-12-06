@@ -4,6 +4,7 @@ function startGame() {
     gameState = "loadingNotes";
     createStandardNotes();
     createHolds();
+    createMines();
     gameState = "gameLoop";
 }
 
@@ -41,6 +42,23 @@ function createHolds() {
     }
 }
 
+function createMines() {
+    let amountMeasures = currentSong.notes.length;
+    let index = 0;
+    for (let i = 0; i < amountMeasures; i++) {
+        let snap = currentSong.notes[i].length;
+        for (let j = 0; j < snap; j++) { 
+            for (let k = 0; k < 4; k++) {
+                if (currentSong.notes[i][j].charAt(k) == "M") {
+                    let time = (i + j / snap) * 4 * currentSong.crotchet;
+                    mines[index] = new Mine(k, time);
+                    index++;
+                }
+            }
+        }
+    }
+}
+
 function loadingNotes() {
     drawMainComponents();
     drawReceptors();
@@ -61,6 +79,12 @@ function gameLoop() {
         i.update();
         i.draw();
     }
+    for (let i = mineIndex; i < mines.length; i++) {
+        mines[i].update();
+        mines[i].draw();
+    }
+    drawSongProgress();
+    drawLife();
     drawJudgeCount();
     drawAccuracy();
     drawCombo();
@@ -90,6 +114,9 @@ function drawAccuracy() {
 }
 
 let receptorY;
+const receptorImg = new Image();
+receptorImg.src = 'img/receptor-down.png';
+
 function drawReceptors() {
     if (downscroll) {
         receptorY = 400;
@@ -104,6 +131,45 @@ function drawReceptors() {
     quickDrawRect("lime", 324, receptorY, held[2]);
     quickDrawRect("#800000", 384, receptorY, true);
     quickDrawRect("red", 384, receptorY, held[3]);
+    // if (downscroll) {
+    //     receptorY = 393;
+    // } else {
+    //     receptorY = 37;
+    // }
+    // for (let i = 0; i < 4; i++) {
+    //     ctx.save();
+    //     ctx.drawImage(receptorImg, 197 + i * 60, receptorY, 64, 64);
+    //     ctx.restore();
+    // }
+}
+
+function drawSongProgress() {
+    ctx.fillStyle = "gray";
+    ctx.fillRect(150, 460, 340, 10);
+    ctx.fillStyle = "#007F96";
+    let songProgress = currentSong.audio.currentTime / currentSong.audio.duration
+    ctx.fillRect(150, 460, songProgress * 340, 10);
+    let songMin = Math.floor(currentSong.audio.duration / 60);
+    let songSec = Math.round(currentSong.audio.duration % 60);
+    ctx.fillStyle = "white";
+    ctx.fillText(`${songMin}:${songSec}`, 495, 470);
+    ctx.textAlign = "center";
+    determineDifficulty(currentSong.difficulty);
+    ctx.fillText(currentSong.title, 320, 470);
+}
+
+function drawLife() {
+    // Logic
+    if (life > 100) {
+        life = 100;
+    } else if (life <= 0) {
+        currentSong.endSong();
+    }
+    // Draw
+    ctx.fillStyle = "#404040";
+    ctx.fillRect(630, 40, 5, 400);
+    ctx.fillStyle = "#007F96";
+    ctx.fillRect(630, 440, 5, life / 100 * -400);
 }
 
 function drawJudgeCount() {
@@ -164,6 +230,9 @@ function drawJudgment() {
         ctx.fillStyle = "red";
     }
     ctx.fillText(lastJudgment, 320, 270);
+    ctx.font = "10px Roboto";
+    ctx.textAlign = "right";
+    ctx.fillText(`${error.toFixed(2)}ms`, 400, 280)
 }
 
 function quickDrawRect(colour, x, y, fill) {

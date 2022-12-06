@@ -52,14 +52,14 @@ function gameLoop() {
     calcAccuracy();
     // Draw
     drawMainComponents();
-    for (let i = 0; i < holds.length; i++) {
-        holds[i].update();
-        holds[i].draw();
+    for (let i of holds) {
+        i.update();
+        i.draw();
     }
     drawReceptors();
-    for (let i = 0; i < notes.length; i++) {
-        notes[i].update();
-        notes[i].draw();
+    for (let i of notes) {
+        i.update();
+        i.draw();
     }
     drawJudgeCount();
     drawAccuracy();
@@ -69,8 +69,8 @@ function gameLoop() {
 
 function calcAccuracy() {
     let totalNotesHit = 0;
-    for (let i = 0; i < Object.values(judgeCount).length; i++) {
-        totalNotesHit += Object.values(judgeCount)[i];
+    for (let i of Object.values(judgeCount)) {
+        totalNotesHit += i;
     };
 
     // Assign each judgement an amount of points, then calculate the average amount of points
@@ -129,10 +129,10 @@ function drawJudgeCount() {
     ctx.fillText("OK", 100, 350);
     ctx.fillStyle = "red";
     ctx.fillText("NG", 100, 370);
+    ctx.textAlign = "right";
+    ctx.font = "15px Roboto"
+    ctx.fillStyle = "white";
     for (let i = 0; i < Object.values(judgeCount).length; i++) {
-        ctx.textAlign = "right";
-        ctx.font = "15px Roboto"
-        ctx.fillStyle = "white";
         ctx.fillText(Object.values(judgeCount)[i], 170, 230 + i * 20);
     }
 }

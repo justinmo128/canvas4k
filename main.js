@@ -33,6 +33,8 @@ let downscroll = true;
 let scrollSpeed = 85;
 let visualOffset = 0;
 let audioOffset = 25;
+let grade = "";
+let comboBreaks = 0;
 
 // Song Variables;
 let currentSong;

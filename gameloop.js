@@ -89,6 +89,7 @@ function gameLoop() {
     drawAccuracy();
     drawCombo();
     drawJudgment();
+    drawGrades();
 }
 
 function calcAccuracy() {
@@ -200,6 +201,32 @@ function drawJudgeCount() {
     ctx.fillStyle = "white";
     for (let i = 0; i < Object.values(judgeCount).length; i++) {
         ctx.fillText(Object.values(judgeCount)[i], 170, 230 + i * 20);
+    }
+}
+
+function drawGrades() {
+    comboBreaks = judgeCount.uhh + judgeCount.bruh + judgeCount.miss;
+    calcGrades();
+    ctx.textAlign = "left";
+    ctx.font = "15px Roboto";
+    ctx.fillStyle = "white";
+    ctx.fillText(`Combo Breaks: ${comboBreaks}`, 70, 400);
+    ctx.fillText(`Grade: ${grade}`, 70, 420);
+}
+
+function calcGrades() {
+    if (accuracy < 60) {
+        grade = "D";
+    } else if (accuracy < 70) {
+        grade = "C";
+    } else if (accuracy < 80) {
+        grade = "B";
+    } else if (accuracy < 93) {
+        grade = "A";
+    } else if (accuracy < 100) {
+        grade = "AA";
+    } else {
+        grade = "S";
     }
 }
 

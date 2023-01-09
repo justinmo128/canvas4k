@@ -30,13 +30,12 @@ function drawTopMenu() {
     ctx.textAlign = "center";
     ctx.fillText(`Downscroll: ${downscroll}`, 160, 230);
     ctx.fillText(`Scroll Speed: ${scrollSpeed}`, 160, 280);
-    ctx.fillText(`Visual Offset: ${visualOffset}`, 160, 330);
-    ctx.fillText(`Audio Offset: ${audioOffset}`, 160, 380);
+    ctx.fillText(`Visual Offset: ${visualOffset}ms`, 160, 330);
+    ctx.fillText(`Audio Offset: ${audioOffset}ms`, 160, 380);
     ctx.textAlign = "left";
     ctx.font = "22px Roboto";
-    ctx.fillText("+ is later", 330, 315);
-    ctx.fillText("- is earlier", 330, 350);
-    ctx.fillText("Both offsets in milliseconds", 330, 385);
+    ctx.fillText("+ is later", 330, 335);
+    ctx.fillText("- is earlier", 330, 370);
 }
 
 function drawControlsScreen() {

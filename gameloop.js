@@ -68,6 +68,7 @@ function gameLoop() {
     // Logic
     currentSong.updateSong();
     calcAccuracy();
+    calcGrades();
     // Draw
     drawMainComponents();
     for (let i of holds) {
@@ -86,10 +87,9 @@ function gameLoop() {
     drawSongProgress();
     drawLife();
     drawJudgeCount();
-    drawAccuracy();
+    drawGrades();
     drawCombo();
     drawJudgment();
-    drawGrades();
 }
 
 function calcAccuracy() {
@@ -105,13 +105,49 @@ function calcAccuracy() {
     if (!accuracy) {
         accuracy = 0;
     }
+
+    comboBreaks = judgeCount.uhh + judgeCount.bruh + judgeCount.miss;
 }
 
-function drawAccuracy() {
+
+function calcGrades() {
+    if (accuracy < 60) {
+        grade = "D";
+    } else if (accuracy < 70) {
+        grade = "C";
+    } else if (accuracy < 80) {
+        grade = "B";
+    } else if (accuracy < 93) {
+        grade = "A";
+    } else if (accuracy < 100) {
+        grade = "AA";
+    } else {
+        grade = "S";
+    }
+
+    comboBreaks = judgeCount.uhh + judgeCount.bruh + judgeCount.miss;
+    if (comboBreaks === 0) {
+        if (judgeCount.great === 0 && judgeCount.superb === 0) {
+            comboGrade = "MFC"; // Marv. Full Combo
+        } else if (judgeCount.great === 0) {
+            comboGrade = "SFC"; // Superb Full Combo
+        } else {
+            comboGrade = "FC";
+        }
+    } else if (comboBreaks < 10) {
+        comboGrade = "SDCB"; // Single Digit Combo Break
+    } else {
+        comboGrade = "Clear";
+    }
+}
+
+function drawGrades() {
     ctx.textAlign = "right";
     ctx.font = "20px Roboto";
     ctx.fillStyle = "white";
-    ctx.fillText(`${accuracy.toFixed(2)}%`, 200, 200);
+    ctx.fillText(`${accuracy.toFixed(2)}% (${grade})`, 200, 200);
+    ctx.font = "15px Roboto";
+    ctx.fillText(`Combo Breaks: ${comboBreaks} (${comboGrade})`, 200, 170);
 }
 
 let receptorY;
@@ -201,32 +237,6 @@ function drawJudgeCount() {
     ctx.fillStyle = "white";
     for (let i = 0; i < Object.values(judgeCount).length; i++) {
         ctx.fillText(Object.values(judgeCount)[i], 170, 230 + i * 20);
-    }
-}
-
-function drawGrades() {
-    comboBreaks = judgeCount.uhh + judgeCount.bruh + judgeCount.miss;
-    calcGrades();
-    ctx.textAlign = "left";
-    ctx.font = "15px Roboto";
-    ctx.fillStyle = "white";
-    ctx.fillText(`Combo Breaks: ${comboBreaks}`, 70, 400);
-    ctx.fillText(`Grade: ${grade}`, 70, 420);
-}
-
-function calcGrades() {
-    if (accuracy < 60) {
-        grade = "D";
-    } else if (accuracy < 70) {
-        grade = "C";
-    } else if (accuracy < 80) {
-        grade = "B";
-    } else if (accuracy < 93) {
-        grade = "A";
-    } else if (accuracy < 100) {
-        grade = "AA";
-    } else {
-        grade = "S";
     }
 }
 

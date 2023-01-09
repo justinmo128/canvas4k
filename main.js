@@ -34,6 +34,7 @@ let scrollSpeed = 85;
 let visualOffset = 0;
 let audioOffset = 25;
 let grade = "";
+let comboGrade = "";
 let comboBreaks = 0;
 
 // Song Variables;

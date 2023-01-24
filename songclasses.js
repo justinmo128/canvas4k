@@ -53,6 +53,7 @@ class Song {
     }
     endSong() {
         gameState = "songselect"
+        notes = [];
         this.audio.currentTime = 0;
         this.audio.pause();
     }

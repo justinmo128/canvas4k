@@ -2,57 +2,31 @@ function startGame() {
     song[mainMenuSelect].startSong();
     controlsNotEqual();
     gameState = "loadingNotes";
-    createStandardNotes();
-    createHolds();
-    createMines();
+    createNotes();
     gameState = "gameLoop";
 }
 
-function createStandardNotes() {
+function createNotes() {
     let amountMeasures = currentSong.notes.length;
-    let index = 0;
+    let noteIndex = 0;
+    let holdIndex = 0;
+    let mineIndex = 0;
     for (let i = 0; i < amountMeasures; i++) {
         let snap = currentSong.notes[i].length;
         for (let j = 0; j < snap; j++) { 
             for (let k = 0; k < 4; k++) {
                 if (currentSong.notes[i][j].charAt(k) == 1) {
                     let noteTime = (i + j / snap) * 4 * currentSong.crotchet;
-                    notes[index] = new Note(k, noteTime);
-                    index++;
-                }
-            }
-        }
-    }
-}
-
-function createHolds() {
-    let amountMeasures = currentSong.notes.length;
-    let index = 0;
-    for (let i = 0; i < amountMeasures; i++) {
-        let snap = currentSong.notes[i].length;
-        for (let j = 0; j < snap; j++) { 
-            for (let k = 0; k < 4; k++) {
-                if (currentSong.notes[i][j].charAt(k) == 2 || currentSong.notes[i][j].charAt(k) == 4) {
+                    notes[noteIndex] = new Note(k, noteTime);
+                    noteIndex++;
+                } else if (currentSong.notes[i][j].charAt(k) == 2 || currentSong.notes[i][j].charAt(k) == 4) {
                     let start = (i + j / snap) * 4 * currentSong.crotchet;
-                    holds[index] = new Hold(k, start, i, j);
-                    index++;
-                }
-            }
-        }
-    }
-}
-
-function createMines() {
-    let amountMeasures = currentSong.notes.length;
-    let index = 0;
-    for (let i = 0; i < amountMeasures; i++) {
-        let snap = currentSong.notes[i].length;
-        for (let j = 0; j < snap; j++) { 
-            for (let k = 0; k < 4; k++) {
-                if (currentSong.notes[i][j].charAt(k) == "M") {
+                    holds[holdIndex] = new Hold(k, start, i, j);
+                    holdIndex++;
+                } else if (currentSong.notes[i][j].charAt(k) == "M") {
                     let time = (i + j / snap) * 4 * currentSong.crotchet;
-                    mines[index] = new Mine(k, time);
-                    index++;
+                    mines[mineIndex] = new Mine(k, time);
+                    mineIndex++;
                 }
             }
         }
@@ -168,16 +142,6 @@ function drawReceptors() {
     quickDrawRect("lime", 324, receptorY, held[2]);
     quickDrawRect("#800000", 384, receptorY, true);
     quickDrawRect("red", 384, receptorY, held[3]);
-    // if (downscroll) {
-    //     receptorY = 393;
-    // } else {
-    //     receptorY = 37;
-    // }
-    // for (let i = 0; i < 4; i++) {
-    //     ctx.save();
-    //     ctx.drawImage(receptorImg, 197 + i * 60, receptorY, 64, 64);
-    //     ctx.restore();
-    // }
 }
 
 function drawSongProgress() {

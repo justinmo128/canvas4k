@@ -141,18 +141,18 @@ function gameHandler(keyPressed) {
             for (let j = 0; j < notes.length; j++) {
                 if (notes[j].judge(currentSong.songposition, i)) {
                     notes.shift();
-                    break;
+                    return;
                 }
             }
             for (let j = 0; j < holds.length; j++) {
                 if (holds[j].judge(currentSong.songposition, i)) {
-                    break;
+                    return;
                 }
             }
             for (let j = 0; j < mines.length; j++) {
                 if (mines[j].judge(currentSong.songposition, i)) {
                     mines.shift();
-                    break;
+                    return;
                 }
             }
         }
